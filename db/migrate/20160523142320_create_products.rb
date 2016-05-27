@@ -4,6 +4,7 @@ class CreateProducts < ActiveRecord::Migration
       t.string :name
       t.string :permalink
       t.integer :on_hand, default: 0
+      t.integer :available, default: 0
       t.decimal :price
       t.string :description
 

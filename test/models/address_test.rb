@@ -1,7 +1,12 @@
 require 'test_helper'
 
 class AddressTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  test "valid create" do
+		address = create(:address)
+    assert address.persisted?
+	end
+
+	test "validations" do
+		assert_validations(Address.new, [:line1, :line2, :city, :state, :zip, :user])
+	end
 end

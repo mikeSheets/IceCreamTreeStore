@@ -1,4 +1,38 @@
 Rails.application.routes.draw do
+
+  root 'home#index'
+
+  get 'home/index' , :to => 'home#index'
+
+
+  namespace 'admin' do
+    resources :products
+    resources :orders
+  end
+
+  get 'cart', :to => 'cart#index'
+  get 'cart/address', :to => 'cart#address'
+  get 'cart/billing', :to => 'cart#billing'
+  resources :orders, only: :show
+
+
+
+
+  #   put 'orders/{:id}/cancel'
+  #
+
+    get 'products/index', :to => 'products#index'
+
+    get 'products', :to => 'products#show'
+
+    get 'users/index', :to => 'users#index'
+
+    get 'users', :to => 'users#show'
+
+
+  # end
+
+
   devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

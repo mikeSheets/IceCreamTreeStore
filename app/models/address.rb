@@ -1,6 +1,6 @@
 class Address < ActiveRecord::Base
-	has_one :state
+	belongs_to :state
 	belongs_to :user
-	has_many :orders,
-		inverse_of: :address
+	has_many :orders, inverse_of: :address
+	validates_presence_of :line1, :line2, :city, :state, :zip, :user
 end

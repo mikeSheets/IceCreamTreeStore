@@ -9,12 +9,14 @@ class ActiveSupport::TestCase
 
   def assert_validations(model, fields)
 
-    assert_not model.save
+    assert_not model.save, "Did save."
+
+    # puts model.errors.inspect
 
     fields.each do |field|
-      assert_equal ["can't be blank"], model.errors[field], "#{field} should be empty"
+      assert_equal ["can't be blank"], model.errors[field].uniq, "#{field} should not be empty"
 
     end
-    assert_equal fields.count, model.errors.count
+    # assert_equal fields.count, model.errors.count, model.errors.inspect
   end
 end

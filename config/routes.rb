@@ -16,11 +16,6 @@ Rails.application.routes.draw do
   resources :orders, only: :show
 
 
-
-
-  #   put 'orders/{:id}/cancel'
-  #
-
     get 'products/index', :to => 'products#index'
 
     get 'products', :to => 'products#show'
@@ -29,8 +24,11 @@ Rails.application.routes.draw do
 
     get 'users', :to => 'users#show'
 
+    get 'checkout', :to => 'checkout#idex'
 
-  # end
+    get 'orders/:order_id', :to => 'orders#show'
+
+    # put 'orders/{:id}/cancel'
 
 
   devise_for :users
@@ -84,7 +82,7 @@ Rails.application.routes.draw do
 
   # Example resource route within a namespace:
   #   namespace :admin do
-  #     # Directs /admin/products/* to Admin::ProductsController
+  #     # Directs /admin/products/* to admin::ProductsController
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end

@@ -11,14 +11,14 @@ Rails.application.routes.draw do
   end
 
   get 'cart', :to => 'cart#index'
+
   get 'cart/address', :to => 'cart#address'
+
   get 'cart/billing', :to => 'cart#billing'
+
   resources :orders, only: :show
 
-
-    get 'products/index', :to => 'products#index'
-
-    get 'products', :to => 'products#show'
+  resources :products, only: [:show, :index]
 
     get 'users/index', :to => 'users#index'
 

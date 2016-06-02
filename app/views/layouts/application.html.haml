@@ -5,5 +5,9 @@
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
-  %body
+  %body{class: "#{action_name} #{controller_name}"}
+    .header
+      .bgImage
+        .name
+          Michael's Ice Cream Trees
     = yield

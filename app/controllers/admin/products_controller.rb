@@ -1,5 +1,6 @@
 module Admin
   class ProductsController < ApplicationController
+    layout "admin/application"
     before_action :set_product, only: [:show, :edit, :update, :destroy]
 
     # GET /products
@@ -29,7 +30,7 @@ module Admin
 
       respond_to do |format|
         if @product.save
-          format.html { redirect_to @product, notice: 'Product was successfully created.' }
+          format.html { redirect_to admin_products_url, notice: 'Product was successfully created.' }
           format.json { render :show, status: :created, location: @product }
         else
           format.html { render :new }
@@ -43,7 +44,7 @@ module Admin
     def update
       respond_to do |format|
         if @product.update(product_params)
-          format.html { redirect_to @product, notice: 'Product was successfully updated.' }
+          format.html { redirect_to admin_products_url, notice: 'Product was successfully updated.' }
           format.json { render :show, status: :ok, location: @product }
         else
           format.html { render :edit }
@@ -65,12 +66,12 @@ module Admin
     private
     # Use callbacks to share common setup or constraints between actions.
     def set_product
-      @product = Product.find(params[:id])
+      @product = Product.find_by_permalink(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def product_params
-      params.require(:product).permit(:description)
+      params.require(:product).permit(:name, :permalink, :on_hand, :available, :price, :description)
     end
   end
 end

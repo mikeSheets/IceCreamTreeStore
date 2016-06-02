@@ -1,4 +1,34 @@
 %p#notice= notice
-= link_to 'Edit', edit_product_path(@product)
-|
-= link_to 'Back', products_path
+.container
+  %p
+    %p
+      %strong
+        Product Name:
+      = @product.name
+    %p
+      %strong
+        Product permalink:
+      = @product.permalink
+    %p
+      %strong
+        Quantity on hand:
+      = @product.on_hand
+    %p
+      %strong
+        Quantity available:
+      = @product.available
+    %p
+      %strong
+        Price:
+      = @product.price
+  %p
+    %strong
+      Description:
+    = @product.description
+
+  .bottom_links
+    = link_to 'Edit', edit_admin_product_path(@product.permalink)
+    |
+    = link_to 'Back', admin_products_path
+    |
+    = link_to 'Customer View', product_path(@product.permalink)

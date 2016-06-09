@@ -1,12 +1,11 @@
 module Admin
-  class ProductsController < ApplicationController
-    layout "admin/application"
-    before_action :set_product, only: [:show, :edit, :update, :destroy]
+  class ProductsController < AdminController
+    load_resource find_by: :permalink
+    authorize_resource
 
     # GET /products
     # GET /products.json
     def index
-      @products = Product.all
     end
 
     # GET /products/1
@@ -64,10 +63,6 @@ module Admin
     end
 
     private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_product
-      @product = Product.find_by_permalink(params[:id])
-    end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def product_params

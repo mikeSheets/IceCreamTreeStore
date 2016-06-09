@@ -15,6 +15,7 @@ class Order < ActiveRecord::Base
 
 	after_initialize :set_default_state
 
+  # TODO - state machine
 
 	def validate_state_change
 		old = changed_attributes["state"]

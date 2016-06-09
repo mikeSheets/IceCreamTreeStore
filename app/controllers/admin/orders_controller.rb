@@ -1,6 +1,6 @@
 module Admin
-  class OrdersController < ApplicationController
-    layout "admin/application"
+  class OrdersController < AdminController
+
 
     def index
     end

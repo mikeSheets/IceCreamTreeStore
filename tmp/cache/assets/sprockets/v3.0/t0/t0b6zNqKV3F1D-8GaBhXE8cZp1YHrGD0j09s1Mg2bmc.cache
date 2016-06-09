@@ -1,0 +1,14 @@
+I"P(function() {
+  $(document).ready(function() {
+    return $(".add_to_cart").on("click", function() {
+      var $t, params, qty;
+      $t = $(this);
+      qty = $t.parents(".product").find('.qty').val();
+      params = $t.data("params");
+      params.quantity = qty;
+      return $t.data("params", params);
+    });
+  });
+
+}).call(this);
+:ET

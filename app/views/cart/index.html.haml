@@ -1,2 +1,47 @@
-%H1 Cart#index
-%p Find me in app/views/cart/index.html.erb
+.container
+  %H3 Your current cart:
+  %table
+    %tr.col-headers.col-sm-12
+      %th.item
+        Item
+      %th.price
+        Item Price
+      %th.price
+        Price
+      %th.quantity
+        Update
+      %th.quantity
+        Quantity
+    - for item in cart.order_items
+      %tr.col-sm-12
+        %td.item= item.source.name
+        %td.price= number_to_currency (item.source.price*item.quantity)
+        %td.price= number_to_currency item.source.price
+        %td.quantity
+          .form-group
+            %select.form-control
+              - (item.source.available).times do |n|
+                %option.qty #{n+1}
+
+        %td.quantity= item.quantity
+    %tr.col-sm-12
+      %td.item.total
+        Total:
+      %td.price.total= number_to_currency cart.order_items.to_a.sum{|x| x.price*x.quantity}
+      %td.price.total
+      %td.quantity
+        .update
+          Update Cart
+      %td.quantity.total
+        =cart.order_items.to_a.sum(&:quantity)
+  %br
+  %br
+  .checkout-link
+    = link_to 'Checkout', cart_address_path
+    |
+    = link_to 'Empty Cart', cart_destroy_path, method: :post
+
+  .bottom_links
+    =link_to 'Home', root_path
+    |
+    =link_to 'Products', products_path

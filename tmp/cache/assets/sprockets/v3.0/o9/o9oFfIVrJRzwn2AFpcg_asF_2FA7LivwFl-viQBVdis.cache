@@ -1,0 +1,10 @@
+I"Ó(function() {
+  $("#add_to_cart").on("click", function() {
+    var $t, qty;
+    $t = $(this);
+    qty = $t.parent(".product").children(".qty").value();
+    return $t.data(qty, "quantity");
+  });
+
+}).call(this);
+:ET

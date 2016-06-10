@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<component name="dataSourceStorage">
-  <data-source name="Rails IceCreamTreeStore: test" uuid="5fd06b43-ee3b-4712-a49e-0f10abe71881">
-    <database-info product="" version="" jdbc-version="" driver-name="" driver-version=""/>
-  </data-source>
-  <data-source name="Rails IceCreamTreeStore: development" uuid="8e50a92a-bb6c-4f92-a9a5-8abbb664a02e">
-    <database-info product="" version="" jdbc-version="" driver-name="" driver-version=""/>
-  </data-source>
-</component>

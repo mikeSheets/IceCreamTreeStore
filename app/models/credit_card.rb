@@ -1,6 +1,6 @@
 class CreditCard < ActiveRecord::Base
-	belongs_to :user
-	has_many :payments, inverse_of: :credit_card
+  belongs_to :user
+  has_many :payments, inverse_of: :credit_card
   validates_presence_of :last_four, :month, :year, :user, :name
   validates_presence_of :number, :cvc,
                         on: :create
@@ -14,12 +14,9 @@ class CreditCard < ActiveRecord::Base
 
   private
   def set_last_four
-    return if self.number.blank?
-    if CreditCardValidator::Validator.valid?(self.number)
-      self.last_four = self.number.last(4)
+    return if number.blank?
+    if CreditCardValidator::Validator.valid?(number)
+      self.last_four = number.last(4)
     end
   end
-
-
-
 end

@@ -55,3 +55,7 @@ group :development do
 end
 
 gem 'credit_card_validator'
+
+gem 'bootstrap-sass', '~> 3.3.6'
+
+gem 'autoprefixer-rails'

@@ -1,0 +1,34 @@
+- if @product.errors.any?
+  #error_explanation
+    %h2
+      = pluralize(@product.errors.count, "error")
+      prohibited this product from being saved:
+    %ul
+      - @product.errors.full_messages.each do |message|
+        %li= message
+.actions
+.col-sm-12
+  .col-sm-3.form_label
+    =f.label :name
+    %br
+    =f.text_field :name
+  .col-sm-3.form_label
+    =f.label :on_hand
+    %br
+    =f.text_field :on_hand
+  .col-sm-3.form_label
+    =f.label :available
+    %br
+    =f.text_field :available
+  .col-sm-3.form_label
+    =f.label :price
+    %br
+    =f.text_field :price
+
+  .description
+    =f.label :description
+    %br
+    =f.text_area :description
+    %br
+  .submit
+    =f.submit

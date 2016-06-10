@@ -1,0 +1,33 @@
+I"=(function() {
+  $(document).ready(function() {
+    return $(".add_to_cart").on("click", function() {
+      var $t, params, qty;
+      $t = $(this);
+      qty = $t.parents(".product").find('option:selected').val();
+      qty = parseInt(qty);
+      if ((qty == null) || qty <= 0) {
+        return false;
+      } else {
+        params = $t.data("params");
+        params.quantity = qty;
+        return $t.data("params", params);
+      }
+    });
+  });
+
+  $(".update_cart").on("click", function() {
+    var $t, params, qty;
+    $t = $(this);
+    qty = $t.parents('tr.product').find('option:selected').val();
+    qty = parseInt(qty);
+    if ((qty == null) || qty <= 0) {
+      return false;
+    } else {
+      params = $t.data("params");
+      params.quantity = qty;
+      return $t.data("params", params);
+    }
+  });
+
+}).call(this);
+:ET

@@ -15,6 +15,14 @@
  */
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import "colors";
+
+.alert{
+  text-align: center;
+  color: red;
+  font-weight: 400;
+  margin: 0 auto;
+}
 
 .bgImage{
   height: 200px;
@@ -22,11 +30,29 @@
   background: image-url('ictHeader.jpg') center;
   background-size: cover;
   .name{
-    margin-left: 10% ;
-    line-height: 200px;
-    font-size: 25px;
-    font-weight: bolder;
-    color: #ffffff;
+    text-align: center;
+    margin: 0 auto;
+    a {
+      font-family: 'Nosifer', cursive;
+      line-height: 200px;
+      font-size: 20px;
+      color: $primary;
+    }
   }
 }
-
+.top-buttons {
+  margin: 0 10px;
+  float: right;
+  position: absolute;
+  right: 0;
+  top: 0;
+  .btn-group {
+    width: 25%;
+    .btn.btn-default.dropdown-toggle {
+      width: 125px;
+    }
+    .dropdown-menu{
+      width: 125px;
+    }
+  }
+}

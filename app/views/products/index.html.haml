@@ -2,10 +2,20 @@
 .container
   %h1 Listing Products
   %br
-  %table
-    %tbody
-      - @products.each do |product|
-        %tr
-          %td.product_name= product.name
-          %td.admin_link= link_to 'Show more', product_path(product.permalink)
-          %td.admin_link= product.price
+  - @products.each do |product|
+    - if product.on_hand > 0
+      .col-sm-6.product
+        .panel.panel-default
+          .panel-heading
+            %h2=product.name
+          .panel-body
+            .admin_link= number_to_currency product.price
+            .admin_link= link_to 'Show more', product_path(product.permalink)
+            .admin_link
+              .qty-stuff
+                Quantity:
+              .form-group
+                %select.form-control
+                  - (product.available).times do |n|
+                    %option.qty #{n+1}
+            .admin_link= link_to 'Add to cart', add_to_cart_path(product), data: { method: :post, remote: true, params: { quantity: 1 } }, class: "add_to_cart"

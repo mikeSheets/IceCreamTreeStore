@@ -32,6 +32,7 @@ body{
   background: $secondary;
 }
 
+
 .bgImage{
   height: 250px;
   max-width: 100%;
@@ -49,14 +50,26 @@ body{
   }
 }
 
+.page-search{
+  position: absolute;
+  right: 0;
+  top: 224px;
+  margin-right: 5px;
+  input{
+    width: 205px;
+  }
+}
+
 .top-buttons {
   margin: 0 10px;
   float: right;
   position: absolute;
   right: 0;
   top: 0;
+  color: $primary-font;
   .btn-group {
     width: 25%;
+    background-color: $primary;
     .btn.btn-default.dropdown-toggle {
       width: 125px;
     }
@@ -64,4 +77,10 @@ body{
       width: 125px;
     }
   }
+}
+
+.cart.pull-right{
+  margin: 8px;
+  color: $primary-font;
+
 }

@@ -28,7 +28,7 @@ class Order < ActiveRecord::Base
       errors.add(:state, "initial state must be #{STATES.first}") if self.state != STATES.first
     elsif new_index.nil?
       errors.add(:state, "#{new} is not a valid state")
-    elsif (new_index) != (old_index + 1)
+    elsif new_index != (old_index + 1)
       errors.add(:state, "Cannot transition from #{new} to #{old}")
     end
     errors.empty?

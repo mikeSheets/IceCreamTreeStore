@@ -12,6 +12,7 @@ class Ability
       end
 
       can [:index, :address, :billing, :checkout], :cart
+      can :crud, Address, user_id: user.id
     end
   end
 end

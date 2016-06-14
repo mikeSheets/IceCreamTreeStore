@@ -2,8 +2,8 @@
 # All this logic will automatically be available in application.coffee.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-$( document ).ready ->
-  $(".add_to_cart").on "click", ->
+$(document).on 'ready', ->
+  $(".add_to_cart").on  "click", ->
     $t = $(this)
     qty = $t.parents(".product").find('option:selected').val()
 

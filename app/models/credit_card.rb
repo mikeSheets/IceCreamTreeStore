@@ -17,6 +17,8 @@ class CreditCard < ActiveRecord::Base
     return if number.blank?
     if CreditCardValidator::Validator.valid?(number)
       self.last_four = number.last(4)
+    else
+      self.errors[:number] << "is not a valid format."
     end
   end
 end

@@ -16,27 +16,26 @@ table{
     background: $primary;
   }
   tr{
-    width: inherit;
-    display: block;
-    height: 50px;
+    width: 100%;
     margin: 0 auto;
-
+    td{
+      padding: 10px;
+    }
     .item {
       margin: 10px 2%;
-      width: 300px;
+      width: 20%;
       text-align: left;
-      float: left;
+      padding: 10px;
     }
     .quantity{
       margin: 10px 2%;
-      width: 100px;
+      width: 5%;
       text-align: center;
-      float: right;
       .form-control{
         height: 20px;
       }
       .qty{
-        width: 100px;
+        width: 5%;
         height: 30px;
         margin: 0 auto;
       }
@@ -51,14 +50,43 @@ table{
 
     .price{
       margin: 10px 2%;
-      width: 70px;
-      text-align: right;
-      float: right;
+      width: 5%;
+      text-align: center;
     }
     .total{
       font-weight: bold;
     }
   }
+  tbody.address-block {
+    width: 300px;
+    vertical-align: middle;
+    tr.address-input {
+      background: $primary;
+      margin: 0 auto;
+      text-align: -webkit-center;
+      td.address-label {
+        margin: 10px 2%;
+        width: 100px;
+        text-align: left;
+      }
+      td.address-field {
+        margin: 10px 2%;
+        width: 150px;
+      }
+    }
+  }
+}
+select.form-control{
+  margin: 10px auto;
+  width: 70%;
+}
+
+.update{
+  margin: 0 auto;
+  width: 55px;
+}
+
+tr.bill-row{
 }
 
 .checkout-link{

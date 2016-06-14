@@ -1,39 +1,42 @@
 .container
   %H3 Your current cart:
-  %table
-    %tr.col-headers.col-sm-12
+  %table.col-sm-12
+    %tr.col-headers
       %th.item
         Item
-      %th.price
-        Item Price
-      %th.price
-        Price
       %th.quantity
         Update
       %th.quantity
         Quantity
+      %th.price
+        Item Price
+      %th.price
+        Price
+
+
     - for item in cart.order_items
-      %tr.col-sm-12
+      %tr
         %td.item= item.source.name
-        %td.price= number_to_currency (item.source.price*item.quantity)
-        %td.price= number_to_currency item.source.price
         %td.quantity
           .form-group
             %select.form-control
               - (item.source.available).times do |n|
                 %option.qty #{n+1}
-
         %td.quantity= item.quantity
-    %tr.col-sm-12
+        %td.price= number_to_currency item.source.price
+        %td.price= number_to_currency (item.source.price*item.quantity)
+
+    %tr
       %td.item.total
         Total:
-      %td.price.total= number_to_currency cart.order_items.to_a.sum{|x| x.price*x.quantity}
-      %td.price.total
       %td.quantity
         .update
-          Update Cart
+          Update
       %td.quantity.total
         =cart.order_items.to_a.sum(&:quantity)
+      %td.price.total
+      %td.price.total= number_to_currency cart.order_items.to_a.sum{|x| x.price*x.quantity}
+
   %br
   %br
   .checkout-link

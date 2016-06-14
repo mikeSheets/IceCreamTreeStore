@@ -2,11 +2,15 @@
 %html
   %head
     %title Mike's Ice Cream Tree's
-    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
-    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = stylesheet_link_tag    'application', media: 'all'
+    = javascript_include_tag 'application'
+    = javascript_include_tag '../controllers/search.js'
     %link{:href => 'https://fonts.googleapis.com/css?family=Cabin+Sketch', :rel => "stylesheet", :type => "text/css"}/
     = csrf_meta_tags
   %body{class: "#{action_name} #{controller_name}"}
+    .page-search
+      %form{ :action => "", :method => "get"}
+        %input{ :type => "text", :name => "input", :placeholder => "Search products" }
     .top-buttons
       .btn-group
         %button.btn.btn-default.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
@@ -16,14 +20,14 @@
           %li= link_to 'Login', new_user_session_path
           %li= link_to 'Sign-up', new_user_registration_path
           %li= link_to 'Sign out', destroy_user_session_path
+      =link_to cart_path, class: "cart pull-right" do
+        Cart
+        %span.badge
+          (#{cart.order_items.where(source_type: Product.name).count})
     .header
       .bgImage
         .name= link_to "Michael's Ice Cream Trees", root_path
 
-        =link_to cart_path, class: "cart pull-right" do
-          Cart
-          %span.badge
-            (#{cart.order_items.where(source_type: Product.name).count})
 
 
     - flash.each do |name, msg|

@@ -15,7 +15,7 @@
  */
 @import "bootstrap-sprockets";
 @import "bootstrap";
-@import "colors";
+@import "../colors";
 
 .alert{
   text-align: center;
@@ -40,14 +40,17 @@
     }
   }
 }
+
 .top-buttons {
   margin: 0 10px;
   float: right;
   position: absolute;
   right: 0;
   top: 0;
+  color: $primary-font;
   .btn-group {
     width: 25%;
+    background-color: $primary;
     .btn.btn-default.dropdown-toggle {
       width: 125px;
     }
@@ -55,4 +58,10 @@
       width: 125px;
     }
   }
+}
+
+.cart.pull-right{
+  margin: 8px;
+  color: $primary-font;
+
 }

@@ -1,7 +1,7 @@
 %p#notice= notice
 .container
   %h1 Listing Products
-  %br
+
   - @products.each do |product|
     - if product.on_hand > 0
       .col-sm-6.product

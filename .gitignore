@@ -1,7 +1,7 @@
 
-.idea/IceCreamTreeStore.iml
-.idea/workspace.xml
-.idea/.generators
+.idea/*
 log/test.log
 db/test.sqlite3
 tmp/*
+.idea/
+tmp/

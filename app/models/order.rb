@@ -17,6 +17,12 @@ class Order < ActiveRecord::Base
 
   # TODO - state machine
 
+  def serializable_hash(options={})
+    {
+      product_count: order_items.where(source_type: Product.name).sum(:quantity)
+    }.merge(super(options))
+  end
+
   def validate_state_change
     old = changed_attributes["state"]
     new = state

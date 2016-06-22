@@ -67,6 +67,16 @@ h1{
   }
 }
 
+.image_box{
+  width: 996px;
+  max-width: 100%;
+  margin: 0 auto;
+  img{
+
+    max-width: 100%;
+  }
+}
+
 .submit{
   margin: 0 auto;
   clear: both;

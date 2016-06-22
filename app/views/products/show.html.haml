@@ -1,26 +1,27 @@
 .container
+  .image_box
+    = image_tag "products/#{@product.image.split('/').last}"
   %p
-    %p
-      %strong
-        Product Name:
-      = @product.name
-    %p
-      %strong
-        Quantity on hand:
-      = @product.on_hand
-    %p
-      %strong
-        Quantity available:
-      = @product.available
-    %p
-      %strong
-        Price:
-      = @product.price
-    %p
-      %strong
-        Description:
-      = @product.description
-  %br
-  %br
-  .bottom_links
-    = link_to 'Back', products_path
+    %strong
+      Product Name:
+    = @product.name
+  %p
+    %strong
+      Quantity on hand:
+    = @product.on_hand
+  %p
+    %strong
+      Quantity available:
+    = @product.available
+  %p
+    %strong
+      Price:
+    = @product.price
+  %p
+    %strong
+      Description:
+    = @product.description
+%br
+%br
+.bottom_links
+  = link_to 'Back', products_path

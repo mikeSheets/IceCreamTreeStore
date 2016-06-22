@@ -11,6 +11,17 @@ Rails.application.routes.draw do
     resources :orders
   end
 
+  namespace :api do 
+    namespace :v1 do 
+      resources :orders do 
+        get 'cart', on: :collection, to: 'orders#get_cart'
+      end
+      resources :products do
+        get 'products', on: :collection, to: 'add_to_cart'
+      end
+    end
+  end
+
   get 'cart', to: 'cart#index'
   get 'cart/address', to: 'cart#address'
   get 'cart/billing', to: 'cart#billing'
@@ -24,6 +35,7 @@ Rails.application.routes.draw do
   put 'cart/edit_cc/:id', to: 'cart#edit_cc', as: :edit_cc
   post 'cart/add_cc', to: 'cart#add_cc', as: :add_cc
   get 'cart/checkout', to: 'cart#checkout'
+
 
   resources :orders, only: :show
 

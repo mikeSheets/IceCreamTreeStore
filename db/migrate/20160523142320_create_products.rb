@@ -7,6 +7,7 @@ class CreateProducts < ActiveRecord::Migration
       t.integer :available, default: 0
       t.decimal :price
       t.string :description
+      t.string :image
 
       t.timestamps null: false
     end

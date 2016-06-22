@@ -6,7 +6,7 @@
     = javascript_include_tag 'application'
     %link{:href => 'https://fonts.googleapis.com/css?family=Cabin+Sketch', :rel => "stylesheet", :type => "text/css"}/
     = csrf_meta_tags
-  %body{class: "#{action_name} #{controller_name}"}
+  %body{"ng-app" => "treeApp", class: "#{action_name} #{controller_name}", 'ng-controller' => 'bodyCtrl'}
     .page-search
       %form{ :action => "", :method => "get"}
         %input{ :type => "text", :name => "input", :placeholder => "Search products" }
@@ -19,10 +19,11 @@
           %li= link_to 'Login', new_user_session_path
           %li= link_to 'Sign-up', new_user_registration_path
           %li= link_to 'Sign out', destroy_user_session_path
-      =link_to cart_path, class: "cart pull-right" do
-        Cart
-        %span.badge
-          (#{cart.order_items.where(source_type: Product.name).count})
+      .cart_thing
+        =link_to cart_path, class: "cart pull-right" do
+          Cart
+          %span.badge
+            ({{cart.product_count}})
     .header
       .bgImage
         .name= link_to "Michael's Ice Cream Trees", root_path
@@ -31,5 +32,5 @@
 
     - flash.each do |name, msg|
       = content_tag :div, msg, class: name
-
-    = yield
+    .page_content
+      = yield

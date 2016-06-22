@@ -3,6 +3,7 @@ module Admin
     load_resource find_by: :permalink
     authorize_resource
 
+
     # GET /products
     # GET /products.json
     def index
@@ -16,15 +17,19 @@ module Admin
     # GET /products/new
     def new
       @product = Product.new
+      @images = Dir.glob("app/assets/images/products/*.jpg")
+
     end
 
     # GET /products/1/edit
     def edit
+      @images = Dir.glob("app/assets/images/products/*.jpg")
     end
 
     # POST /products
     # POST /products.json
     def create
+
       @product = Product.new(product_params)
 
       respond_to do |format|
@@ -66,7 +71,7 @@ module Admin
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def product_params
-      params.require(:product).permit(:name, :permalink, :on_hand, :available, :price, :description)
+      params.require(:product).permit(:name, :permalink, :on_hand, :available, :price, :description, :image)
     end
   end
 end

@@ -1,21 +1,26 @@
 %p#notice= notice
 .container
-  %h1 Listing Products
+  %h1 Catjeet has trees if you have coin.
 
-  - @products.each do |product|
-    - if product.on_hand > 0
-      .col-sm-6.product
-        .panel.panel-default
-          .panel-heading
-            %h2=product.name
-          .panel-body
-            .admin_link= number_to_currency product.price
-            .admin_link= link_to 'Show more', product_path(product.permalink)
-            .admin_link
-              .qty-stuff
-                Quantity:
-              .form-group
-                %select.form-control
-                  - (product.available).times do |n|
-                    %option.qty #{n+1}
-            .admin_link= link_to 'Add to cart', add_to_cart_path(product), data: { method: :post, remote: true, params: { quantity: 1 } }, class: "add_to_cart"
+  .product_box{"ng-controller" => "productsCtrl", "ng-init" => "init(#{@products.to_json})"}
+    .col-sm-6.product{"ng-repeat" => "product in products"}
+      .panel.panel-default{"ng-if" => "product.available > 0", "ng-controller" => "productCtrl"}
+        .panel-heading
+          %h2
+            {{product.name}}
+        .panel-body
+          .image_box
+            = image_tag "", 'ng-src' => "{{product.formatted_image}}"
+          .admin_link {{product.price | currency}}
+          .admin_link
+            = link_to 'Show more', "{{product.formatted_link}}"
+          .admin_link
+            .qty-stuff
+              Quantity:
+            .form-group
+              %select.form-control
+                %option.qty{"ng-repeat" => "n in selectOp() track by index"}
+                  {{n}}
+          //.admin_link= link_to 'Add to cart', add_to_cart_path(product), data: { method: :post, remote: true, params: { quantity: 1 } }, class: "add_to_cart"    }
+  .bottom_links
+    = link_to 'To Cart', cart_path

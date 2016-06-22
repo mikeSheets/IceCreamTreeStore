@@ -25,11 +25,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'devise'
 gem 'cancancan', '~> 1.10'
-
+gem 'rake', '~> 11.2.2'
 gem 'haml-rails', "~> 0.9"
-
-gem 'angularjs-rails', '~> 1.5', '>= 1.5.5'
-
+gem 'angularjs-rails'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

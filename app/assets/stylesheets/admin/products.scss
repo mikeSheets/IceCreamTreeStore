@@ -69,6 +69,16 @@ table {
   }
 }
 
+.image_box{
+  width: 996px;
+  max-width: 100%;
+  margin: 0 auto;
+  img{
+
+    max-width: 100%;
+  }
+}
+
 .submit input{
   display: block;
   margin: 0 auto;

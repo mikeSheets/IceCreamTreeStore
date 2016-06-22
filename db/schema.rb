@@ -72,6 +72,7 @@ ActiveRecord::Schema.define(version: 20160524140723) do
     t.integer  "available",   default: 0
     t.decimal  "price"
     t.string   "description"
+    t.string   "image"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
   end

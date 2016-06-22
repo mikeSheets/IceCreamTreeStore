@@ -17,8 +17,9 @@ Rails.application.routes.draw do
         get 'cart', on: :collection, to: 'orders#get_cart'
       end
       resources :products do
-        get 'products', on: :collection, to: 'add_to_cart'
+        post 'add_to_cart', on: :member
       end
+      resources :order_items, except: [:show, :index]
     end
   end
 

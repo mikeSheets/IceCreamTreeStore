@@ -13,14 +13,13 @@
             = image_tag "", 'ng-src' => "{{product.formatted_image}}"
           .admin_link {{product.price | currency}}
           .admin_link
-            = link_to 'Show more', "{{product.formatted_link}}"
+            %a{'ng-href'=> "#{products_path}/{{ product.permalink }}"} {{ product.name }}
           .admin_link
             .qty-stuff
               Quantity:
             .form-group
-              %select.form-control
-                %option.qty{"ng-repeat" => "n in selectOp() track by index"}
-                  {{n}}
-          //.admin_link= link_to 'Add to cart', add_to_cart_path(product), data: { method: :post, remote: true, params: { quantity: 1 } }, class: "add_to_cart"    }
+              %select.form-control{"ng-model" => "product.quantity", "ng-change" => "add(product)"}
+                %option.qty{"ng-repeat" => "number in selectOp() track by $index", "ng-value" => "{{number}}"}
+                  {{number}}
   .bottom_links
     = link_to 'To Cart', cart_path

@@ -9,7 +9,7 @@ class Product < ActiveRecord::Base
   end
 
   def formatted_link
-    "localhost:3000/products/" + permalink
+    "localhost:3000/products/" + permalink.to_s
   end
 
   def serializable_hash(options={})

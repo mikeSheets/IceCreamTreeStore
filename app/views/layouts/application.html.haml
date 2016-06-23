@@ -19,7 +19,7 @@
       .cart_thing
         =link_to cart_path, class: "cart pull-right" do
           Cart
-          %span.badge
+          %span.badge{"ng-model" => "cart"}
             ({{cart.product_count}})
     .header
       .bgImage

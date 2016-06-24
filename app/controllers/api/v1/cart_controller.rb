@@ -1,4 +1,4 @@
-class Api::V1::ProductsController < ApplicationController
+class Api::V1::CartController < ApplicationController
 
   def add_product
     product = OrderItem.find_or_initialize_by(:source_id, :order_id)

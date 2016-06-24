@@ -1,9 +1,10 @@
 class Api::V1::OrderItemsController < ApplicationController
 
   def create
-    oi = OrderItem.new(order_item_params)
+    oi = OrderItem.find_or_initialize_by(source_id: params[:source_id], order_id: cart.id, source_type: params[:source_type])
+    oi.quantity = params[:quantity]
 
-    if !oi.save
+    unless oi.save
       flash[:alert] = oi.errors.map{|name, err| "#{name}: #{err}"}.join(", ")
     end
 

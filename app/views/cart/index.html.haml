@@ -1,41 +1,46 @@
 .container
   %H3 Your current cart:
-  %table.col-sm-12
-    %tr.col-headers
-      %th.item
-        Item
-      %th.quantity
-        Update
-      %th.quantity
-        Quantity
-      %th.price
-        Item Price
-      %th.price
-        Price
+  .cart_item{"ng-controller" => "cartCtrl"}
+    %table.col-sm-12
+      %tr.col-headers
+        %th.item
+          Item
+        %th.quantity
+          Update
+        %th.quantity
+          Quantity
+        %th.price
+          Item Price
+        %th.price
+          Price
 
 
-    - for item in cart.order_items
-      %tr
-        %td.item= item.source.name
+      %tr{"ng-repeat" => "item in cart.order_items", "ng-controller" => "itemCtrl"}
+        %td.item
+          {{item.source.name}}
         %td.quantity
           .form-group
-            %select.form-control
-              - (item.source.available).times do |n|
-                %option.qty #{n+1}
-        %td.quantity= item.quantity
-        %td.price= number_to_currency item.source.price
-        %td.price= number_to_currency (item.source.price*item.quantity)
+            %select.form-control{"ng-model" => "item.quantity", "ng-change" => "add_product(item)"}
+              %option.qty{"ng-repeat" => "number in selectOp() track by $index", "ng-value" => "{{number}}"}
+                {{number}}
+        %td.quantity
+          {{item.quantity}}
+        %td.price
+          {{item.source.price | currency}}
+        %td.price
+          {{(item.source.price)*(item.quantity) | currency}}
+      %tr
+        %td.item.total
+          Total:
+        %td.quantity
+          .update
+        %td.quantity.total
+          {{cart.product_count}}
+        %td.price.total
+        %td.price.total
+          {{total() | currency}}
 
-    %tr
-      %td.item.total
-        Total:
-      %td.quantity
-        .update
-          Update
-      %td.quantity.total
-        =cart.order_items.to_a.sum(&:quantity)
-      %td.price.total
-      %td.price.total= number_to_currency cart.order_items.to_a.sum{|x| x.price*x.quantity}
+      //number_to_currency cart.order_items.to_a.sum{|x| x.price*x.quantity}
 
   %br
   %br

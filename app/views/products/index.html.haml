@@ -18,7 +18,7 @@
             .qty-stuff
               Quantity:
             .form-group
-              %select.form-control{"ng-model" => "product.quantity", "ng-change" => "add(product)"}
+              %select.form-control{"ng-model" => "product.quantity", "ng-change" => "add_product(product)"}
                 %option.qty{"ng-repeat" => "number in selectOp() track by $index", "ng-value" => "{{number}}"}
                   {{number}}
   .bottom_links

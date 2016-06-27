@@ -22,6 +22,9 @@ Rails.application.routes.draw do
       resources :order_items do
         post 'create', on: :member
       end
+      resources :address do
+        post 'address', on: :member
+      end
     end
   end
 
@@ -38,6 +41,7 @@ Rails.application.routes.draw do
   put 'cart/edit_cc/:id', to: 'cart#edit_cc', as: :edit_cc
   post 'cart/add_cc', to: 'cart#add_cc', as: :add_cc
   get 'cart/checkout', to: 'cart#checkout'
+  get 'checkout', to: 'checkout#index'
 
 
   resources :orders, only: :show

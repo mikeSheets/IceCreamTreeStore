@@ -1,2 +1,35 @@
 %h1 Checkout#index
 %p Find me in app/views/checkout/index.html.haml
+.container
+  .address_box.col-sm-4{"ng-controller" => "addressCtrl", "ng-init" => "address_init(#{@address.to_json})"}
+    %table
+      %tbody.address-block
+        %tr.address-input
+          %input{"ng-model" => "address.name"}
+        %tr.address-input
+          %input{"ng-model" => "address.line1"}
+        %tr.address-input
+          %input{"ng-model" => "address.line2"}
+        %tr.address-input
+          %input{"ng-model" => "address.city"}
+        %tr.address-input
+          %select.form-control{"ng-options" => "state.id as state.name for state in states"}
+            %option{"ng-repeat" => "(id, name) in states", "ng-options" => "id as name for state in states"}
+              {{id}}
+        %tr.address-input
+          %input{"ng-model" => "address.zip"}
+
+
+  -#.billing_box.col-sm-4
+  -#  =@credit_card.errors.inspect
+  -#- if @credit_card.persisted?
+  -#  = form_for(@credit_card, method: :put, url: edit_cc_path(@credit_card.id)) do |f|
+  -#    =render partial: 'cc_form', locals: {f: f}
+  -#    .bottom_links
+  -#      = link_to 'Back', cart_address_path
+  -#-else
+  -#  = form_for(@credit_card, url: add_cc_path) do |f|
+  -#    =render partial: 'cc_form', locals: {f: f}
+  -#    .bottom_links
+  -#      = link_to 'Back', cart_address_path
+  -#.mini_index.col-sm-4

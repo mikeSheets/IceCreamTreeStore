@@ -4,6 +4,7 @@
     %title Mike's Ice Cream Tree's
     = stylesheet_link_tag    'admin/application', media: 'all'
     = javascript_include_tag 'admin/application'
+    = javascript_include_tag 'application'
     %link{:href => 'https://fonts.googleapis.com/css?family=Nosifer', :rel => "stylesheet", :type => "text/css"}/
     = csrf_meta_tags
   %body{"ng-app" => "treeApp", class: "#{action_name} #{controller_name}", 'ng-controller' => 'bodyCtrl'}
@@ -19,7 +20,7 @@
       .cart_thing
         =link_to cart_path, class: "cart pull-right" do
           Cart
-          %span.badge
+          %span.badge{"ng-model" => "cart.product_count"}
             ({{cart.product_count}})
     .header
       .bgImage

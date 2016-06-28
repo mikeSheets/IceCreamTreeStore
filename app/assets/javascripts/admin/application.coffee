@@ -10,7 +10,13 @@
 #Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 #about supported directives.
 #
+#= require angular
+#= require angular-resource
 #= require jquery
 #= require jquery_ujs
 #= require bootstrap-sprockets
+#= require self
 #= require_tree .
+#= require_tree .controllers
+
+angular.module('treeApp', ['ngResource'])

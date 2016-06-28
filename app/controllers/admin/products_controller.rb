@@ -16,9 +16,7 @@ module Admin
 
     # GET /products/new
     def new
-      @product = Product.new
       @images = Dir.glob("app/assets/images/products/*.jpg")
-
     end
 
     # GET /products/1/edit

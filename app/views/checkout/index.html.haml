@@ -1,35 +1,116 @@
-%h1 Checkout#index
-%p Find me in app/views/checkout/index.html.haml
+%h1 Checkout
 .container
-  .address_box.col-sm-4{"ng-controller" => "addressCtrl", "ng-init" => "address_init(#{@address.to_json})"}
+  .address_box.col-sm-4{"ng-controller" => "addressCtrl", "ng-init" => "address_init(#{current_user.address.to_json})"}
+    %h3.checkout_label
+      Address
+    %div{'ng-if' => 'errors'}
+      {{ errors }}
     %table
-      %tbody.address-block
-        %tr.address-input
-          %input{"ng-model" => "address.name"}
-        %tr.address-input
-          %input{"ng-model" => "address.line1"}
-        %tr.address-input
-          %input{"ng-model" => "address.line2"}
-        %tr.address-input
-          %input{"ng-model" => "address.city"}
-        %tr.address-input
-          %select.form-control{"ng-options" => "state.id as state.name for state in states"}
-            %option{"ng-repeat" => "(id, name) in states", "ng-options" => "id as name for state in states"}
-              {{id}}
-        %tr.address-input
-          %input{"ng-model" => "address.zip"}
-
-
-  -#.billing_box.col-sm-4
-  -#  =@credit_card.errors.inspect
-  -#- if @credit_card.persisted?
-  -#  = form_for(@credit_card, method: :put, url: edit_cc_path(@credit_card.id)) do |f|
-  -#    =render partial: 'cc_form', locals: {f: f}
-  -#    .bottom_links
-  -#      = link_to 'Back', cart_address_path
-  -#-else
-  -#  = form_for(@credit_card, url: add_cc_path) do |f|
-  -#    =render partial: 'cc_form', locals: {f: f}
-  -#    .bottom_links
-  -#      = link_to 'Back', cart_address_path
-  -#.mini_index.col-sm-4
+      %tbody.address_block
+        %tr
+          %td
+            %label.check_address
+              Name
+          %td
+            %input.address_input{"ng-model" => "address.name"}
+        %tr
+          %td
+            %label.check_address
+              Line 1
+          %td
+            %input.address_input{"ng-model" => "address.line1"}
+        %tr
+          %td
+            %label.check_address
+              Line 2
+          %td
+            %input.address_input{"ng-model" => "address.line2"}
+        %tr
+          %td
+            %label.check_address
+              City
+          %td
+            %input.address_input{"ng-model" => "address.city"}
+        %tr
+          %td
+            %label.check_address
+              State
+          %td
+            %select.address_input.form-control{"ng-model" => "address.state_id", "ng-options" => "state.id as state.name for state in states"}
+        %tr
+          %td
+            %label.check_address
+              Zipcode
+          %td
+            %input.address_input{"ng-model" => "address.zip"}
+    %button.checkout_click{"ng-click" => "updateAddress()"}
+      Update address
+  .billing_box.col-sm-4{"ng-controller" => "credit_cardCtrl", "ng-init" => "cc_init(#{current_user.credit_card.to_json})"}
+    %h3.checkout_label
+      Billing
+    %div{'ng-if' => 'errors'}
+      {{ errors }}
+    %table
+      %tbody.cc_block
+        %tr
+          %td
+            %label.check_cc
+              Name on card
+          %td
+            %input.address_input{"ng-model" => "cc.name"}
+        %tr
+          %td
+            %label.check_cc
+              Credit Card Number
+          %td
+            %input.address_input{"ng-model" => "cc.number", "placeholder" => "XXXXXXXXXXXX{{cc.last_four}}"}
+        %tr
+          %td
+            %label.check_cc
+              Expiration month
+          %td
+            %input.address_input{"ng-model" => "cc.month"}
+        %tr
+          %td
+            %label.check_cc
+              Expiration year
+          %td
+            %input.address_input{"ng-model" => "cc.year"}
+        %tr
+          %td
+            %label.check_cc
+              CVC
+          %td
+            %input.address_input{"ng-model" => "cc.cvc", "placeholder" => "XXX"}
+    %button.checkout_click{"ng-click" => "updateBilling()"}
+      Update billing
+  .cart_box.col-sm-4{"ng-controller" => "cartCtrl"}
+    %h3.checkout_label
+      Order Items
+    %table
+      %tr.col-headers
+        %th.item
+          Item
+        %th.quantity
+          Quantity
+        %th.price
+          Price
+      %tr{"ng-repeat" => "item in cart.order_items", "ng-controller" => "itemCtrl"}
+        %td.item
+          {{item.source.name}}
+        %td.quantity
+          .form-group
+            %select.form-control{"ng-model" => "item.quantity", "ng-change" => "add_product(item)", "ng-options" => "num for num in arr"}
+        %td.price
+          {{(item.source.price)*(item.quantity) | currency}}
+      %tr
+        %td.item.total
+          Total:
+        %td.quantity.total
+          {{cart.product_count}}
+        %td.price.total
+          {{total() | currency}}
+    %button.checkout_click
+      Place order
+.thing
+= console

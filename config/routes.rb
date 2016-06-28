@@ -22,9 +22,9 @@ Rails.application.routes.draw do
       resources :order_items do
         post 'create', on: :member
       end
-      resources :address do
-        post 'address', on: :member
-      end
+      resources :addresses, only: [:create, :update]
+      resources :states, only: :index
+      resources :credit_cards, only: [:create, :update]
     end
   end
 

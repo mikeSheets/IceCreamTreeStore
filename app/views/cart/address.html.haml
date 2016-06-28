@@ -1,6 +1,5 @@
 %h1 Please enter your address
 .container
-
   - if @address.persisted?
     = form_for(@address, method: :put, url: edit_address_path(@address.id)) do |f|
       =render partial: 'address_form', locals: {f: f}
@@ -11,3 +10,4 @@
       =render partial: 'address_form', locals: {f: f}
       .bottom_links
         = link_to 'Back', cart_path
+=console

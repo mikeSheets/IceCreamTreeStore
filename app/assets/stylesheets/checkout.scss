@@ -1,0 +1,36 @@
+// Place all the styles related to the checkout controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+@import "colors";
+
+.address_box{
+  .check_address{
+  }
+  .address_input{
+    float: right;
+  }
+}
+
+.checkout_label{
+  margin: 20px auto;
+}
+
+select.address_input.form-control{
+  width: 75%;
+  margin: 0;
+}
+
+button.checkout_click {
+  margin: 10px auto;
+  background-color: $tertiary;
+  color: $primary-font;
+  border: solid;
+  border-radius: 25px;
+  width: 100%;
+  text-align: center;
+}
+
+.thing{
+  height: 200px;
+  width: 100%;
+}

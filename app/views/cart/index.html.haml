@@ -20,9 +20,7 @@
           {{item.source.name}}
         %td.quantity
           .form-group
-            %select.form-control{"ng-model" => "item.quantity", "ng-change" => "add_product(item)"}
-              %option.qty{"ng-repeat" => "number in selectOp() track by $index", "ng-value" => "{{number}}"}
-                {{number}}
+            %select.form-control{"ng-model" => "item.quantity", "ng-change" => "add_product(item)", "ng-options" => "num for num in arr"}
         %td.quantity
           {{item.quantity}}
         %td.price

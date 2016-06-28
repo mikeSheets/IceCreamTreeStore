@@ -38,20 +38,33 @@ app.factory('OrderItem', ['$resource', ($resource) ->
 app.factory('Address', ['$resource', ($resource) ->
   $resource '/api/v1/address/:id',
     {
-      id:'@id'
+      id: '@id'
     },
     {
-      'address': {
-        method:'GET',
-        url: '/api/v1/address/get_address'
-      }
-    },
-    {
-      'state': {
-        method: 'GET',
-        url: '/api/v1/adress/get_states'
+      'update': {
+        method: 'PUT',
+        url: '/api/v1/addresses/:id'
       }
     }
+
+])
+
+app.factory('State', ['$resource', ($resource, $options) ->
+  $resource '/api/v1/states'
+])
+
+app.factory('Cc', ['$resource', ($resource) ->
+  $resource '/api/v1/credit_card/:id',
+    {
+      id: '@id'
+    },
+    {
+      'update': {
+        method: 'PUT',
+        url: '/api/v1/credit_card/:id'
+      }
+    }
+
 ])
 
 
@@ -83,11 +96,10 @@ app.controller 'productCtrl', ($scope) ->
 
 
 app.controller 'cartCtrl', ($scope, Product, OrderItem) ->
-
   $scope.init = (products) ->
     $scope.products = products.map (product) ->
       new Product(product)
-      
+
   $scope.total = () ->
     tot = 0
     angular.forEach($scope.cart.order_items, (item) ->
@@ -106,13 +118,36 @@ app.controller 'cartCtrl', ($scope, Product, OrderItem) ->
 
 app.controller 'itemCtrl', ($scope) ->
   $scope.price = ($scope.item.quantity*$scope.item.source.price)
-
-  $scope.selectOp = () ->
-    arr = [1..($scope.item.source.available)]
-    return arr
+  $scope.arr = [1..($scope.item.source.available)]
 
 
-app.controller 'addressCtrl', ($scope, Address) ->
-  $scope.states = Address.state()
-  $scope.address_init = (address) ->
-    $scope.address = new Address(address)
+app.controller 'addressCtrl', ($scope, Address, State) ->
+  $scope.states = State.query()
+  $scope.address_init = (feed) ->
+    if feed?
+      $scope.address = new Address(feed)
+    else
+      $scope.address = new Address()
+  $scope.updateAddress = () ->
+    if $scope.address.id?
+      promise = $scope.address.$update()
+    else
+      promise = $scope.address.$save()
+
+    promise.catch (errors) ->
+      $scope.errors = errors
+
+      
+app.controller 'credit_cardCtrl', ($scope, Cc) ->
+  $scope.cc_init = (credit) ->
+    if credit?
+      $scope.cc = new Cc(credit)
+    else
+      $scope.cc = new Cc()
+  $scope.updateBilling = () ->
+    if $scope.cc.id?
+      promise = $scope.cc.$update()
+    else
+      promise = $scope.cc.$save()
+    promise.catch (errors) ->
+      $scope.errors = errors

@@ -7,7 +7,7 @@
     = javascript_include_tag 'application'
     %link{:href => 'https://fonts.googleapis.com/css?family=Nosifer', :rel => "stylesheet", :type => "text/css"}/
     = csrf_meta_tags
-  %body{"ng-app" => "treeApp", class: "#{action_name} #{controller_name}", 'ng-controller' => 'bodyCtrl'}
+  %body{"ng-app" => "treeApp", class: "#{action_name} #{controller_name}", 'ng-controller' => 'BodyController'}
     .top-buttons
       .btn-group
         %button.btn.btn-default.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}

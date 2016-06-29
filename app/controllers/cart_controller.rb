@@ -42,8 +42,6 @@ class CartController < ApplicationController
   def billing
     authorize! :billing, :cart
 
-    authorize! :billing, :cart
-
     @credit_card = current_user.credit_card || CreditCard.new(name: current_user.name)
   end
 

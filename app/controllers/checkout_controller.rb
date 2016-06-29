@@ -1,5 +1,7 @@
 class CheckoutController < ApplicationController
   def index
+    authorize! :index, :checkout
+
   end
 
 
@@ -8,7 +10,7 @@ class CheckoutController < ApplicationController
   # Entering and editing Addresses
 
   def address
-    authorize! :address, :cart
+    authorize! :address, :checkout
 
     @address = current_user.address || Address.new(name: current_user.name)
   end
@@ -40,9 +42,7 @@ class CheckoutController < ApplicationController
   # Entering billing information
 
   def billing
-    authorize! :billing, :cart
-
-    authorize! :billing, :cart
+    authorize! :billing, :checkout
 
     @credit_card = current_user.credit_card || CreditCard.new(name: current_user.name)
   end

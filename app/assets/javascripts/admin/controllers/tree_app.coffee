@@ -1,9 +1,20 @@
+#admin
+#admin
+#admin
+#admin
+#admin
+#admin
+#admin
+#admin
+
+
+
 app = angular.module('treeApp')
 
-app.controller 'bodyCtrl', ($scope, Order, OrderItem) ->
+app.controller 'BodyController', ($scope, Order, OrderItem) ->
   $scope.cart = Order.cart()
 
-#  This add_product uses item.id for the product page.
+  #  This add_product uses item.id for the product page.
   $scope.add_product = (item) ->
     oi = new OrderItem(source_id: item.id, source_type: "Product", quantity: item.quantity, order_id: $scope.cart.id)
     oi.$save()
@@ -12,17 +23,17 @@ app.controller 'bodyCtrl', ($scope, Order, OrderItem) ->
       count += parseInt(item.quantity)
     $scope.cart.product_count = count
 
-app.controller 'productsCtrl', ($scope, Product) ->
+app.controller 'ProductsController', ($scope, Product) ->
   $scope.init = (products) ->
     $scope.products = products.map (product) ->
       new Product(product)
 
-app.controller 'productCtrl', ($scope) ->
+app.controller 'ProductController', ($scope) ->
   $scope.selectOp = () ->
     arr = [1..($scope.product.available)]
     return arr
 
-app.controller 'cartCtrl', ($scope, Product, OrderItem) ->
+app.controller 'CartController', ($scope, Product, OrderItem) ->
   $scope.init = (products) ->
     $scope.products = products.map (product) ->
       new Product(product)
@@ -33,7 +44,7 @@ app.controller 'cartCtrl', ($scope, Product, OrderItem) ->
       tot += (item.quantity*item.source.price))
     tot
 
-#   This add_product is used for the cart page and uses item.source.id
+  #   This add_product is used for the cart page and uses item.source.id
   $scope.add_product = (item) ->
     oi = new OrderItem(source_id: item.source.id, source_type: "Product", quantity: item.quantity, order_id: $scope.cart.id)
     oi.$save()
@@ -42,11 +53,11 @@ app.controller 'cartCtrl', ($scope, Product, OrderItem) ->
       count += parseInt(item.quantity)
     $scope.cart.product_count = count
 
-app.controller 'itemCtrl', ($scope) ->
+app.controller 'ItemController', ($scope) ->
   $scope.price = ($scope.item.quantity*$scope.item.source.price)
   $scope.arr = [1..($scope.item.source.available)]
 
-app.controller 'addressCtrl', ($scope, Address, State) ->
+app.controller 'AddressController', ($scope, Address, State) ->
   $scope.states = State.query()
   $scope.address_init = (feed) ->
     if feed?
@@ -62,7 +73,7 @@ app.controller 'addressCtrl', ($scope, Address, State) ->
     promise.catch (errors) ->
       $scope.errors = errors
 
-app.controller 'credit_cardCtrl', ($scope, Cc) ->
+app.controller 'CreditCardController', ($scope, Cc) ->
   $scope.cc_init = (credit) ->
     if credit?
       $scope.cc = new Cc(credit)
@@ -75,3 +86,11 @@ app.controller 'credit_cardCtrl', ($scope, Cc) ->
       promise = $scope.cc.$save()
     promise.catch (errors) ->
       $scope.errors = errors
+
+app.controller 'CheckoutController', ($scope, Order, Cc, Product) ->
+  $scope.order = Order.cart()
+  $scope.place_order = () ->
+    if $scope.placing_order
+      return
+    $scope.placing_order = true
+    $scope.order.state = 'placed'

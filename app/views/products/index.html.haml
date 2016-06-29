@@ -2,9 +2,9 @@
 .container
   %h1 Khajiit has trees if you have coin.
 
-  .product_box{"ng-controller" => "productsCtrl", "ng-init" => "init(#{@products.to_json})"}
+  .product_box{"ng-controller" => "ProductsController", "ng-init" => "init(#{@products.to_json})"}
     .col-sm-6.product{"ng-repeat" => "product in products"}
-      .panel.panel-default{"ng-if" => "product.available > 0", "ng-controller" => "productCtrl"}
+      .panel.panel-default{"ng-if" => "product.available > 0", "ng-controller" => "ProductController"}
         .panel-heading
           %h2
             {{product.name}}

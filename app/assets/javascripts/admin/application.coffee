@@ -15,8 +15,8 @@
 #= require jquery
 #= require jquery_ujs
 #= require bootstrap-sprockets
-#= require self
+#= require_self
 #= require_tree .
-#= require_tree .controllers
+#= require_directory ./controllers
 
-angular.module('treeApp', ['ngResource'])
+app = angular.module('treeApp', ['ngResource'])

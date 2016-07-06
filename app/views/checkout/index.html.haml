@@ -1,5 +1,5 @@
 %h1 Checkout
-.container
+.container{"ng-controller" => "CheckoutController"}
   .address_box.col-sm-4{"ng-controller" => "AddressController", "ng-init" => "address_init(#{current_user.address.to_json})"}
     %h3.checkout_label
       Address
@@ -110,7 +110,5 @@
           {{cart.product_count}}
         %td.price.total
           {{total() | currency}}
-    %button.checkout_click{"ng-controller" => "CheckoutController", "ng-click" => "place_order()"}
+    %button.checkout_click{"ng-click" => "place_order()"}
       Place order
-.thing
-= console

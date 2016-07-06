@@ -38,6 +38,7 @@ FactoryGirl.define do
   end
 
   factory :address do
+    name 'name'
     sequence :line1 do |n|
       "line 1-#{n}"
     end

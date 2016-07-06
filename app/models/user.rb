@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   USER = "user"
   ADMIN = "admin"
+  SYSTEM_ID = 1
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

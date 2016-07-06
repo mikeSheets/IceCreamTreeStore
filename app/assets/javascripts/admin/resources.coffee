@@ -10,6 +10,12 @@ app.factory('Order', ['$resource', ($resource) ->
         method:'GET',
         url: '/api/v1/orders/cart'
       }
+    },
+    {
+      'update': {
+        method: 'PUT',
+        url: '/api/v1/orders/:id'
+      }
     }
 ])
 

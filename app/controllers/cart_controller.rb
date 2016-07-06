@@ -68,19 +68,6 @@ class CartController < ApplicationController
 
 
 
-
-  def checkout
-
-  end
-
-  def cart_total
-
-  end
-
-
-
-
-
   # TODO - this is a post
   def place_order
     cart.state = Order::PLACED
@@ -113,7 +100,7 @@ class CartController < ApplicationController
     cart.state = Order::CANCELLED
     cart.delete
 
-    redirect_to cart_path
+    redirect_to products_path
   end
 
 

@@ -16,8 +16,11 @@
     = @product.on_hand
   %p
     %strong
-      Quantity available:
-    = @product.available
+      Available:
+    -if @product.available?
+      Yes
+    -else
+      No
   %p
     %strong
       Price:

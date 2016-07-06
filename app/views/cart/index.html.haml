@@ -1,6 +1,6 @@
 .container
   %H3 Your current cart:
-  .cart_item{"ng-controller" => "cartCtrl"}
+  .cart_item{"ng-controller" => "CartController"}
     %table.col-sm-12
       %tr.col-headers
         %th.item
@@ -14,8 +14,7 @@
         %th.price
           Price
 
-
-      %tr{"ng-repeat" => "item in cart.order_items", "ng-controller" => "itemCtrl"}
+      %tr{"ng-repeat" => "item in cart.order_items", "ng-controller" => "ItemController"}
         %td.item
           {{item.source.name}}
         %td.quantity
@@ -31,21 +30,27 @@
         %td.item.total
           Total:
         %td.quantity
-          .update
+          %button
+            = link_to 'Update', cart_path
         %td.quantity.total
           {{cart.product_count}}
         %td.price.total
         %td.price.total
           {{total() | currency}}
 
-      //number_to_currency cart.order_items.to_a.sum{|x| x.price*x.quantity}
-
+  %br
   %br
   %br
   .checkout-link
-    = link_to 'Checkout', checkout_path
-    |
-    = link_to 'Empty Cart', cart_destroy_path, method: :post
+    -if user_signed_in?
+      %button.to_checkout
+        = link_to 'Checkout', checkout_path
+      %button.empty_cart
+        = link_to 'Empty Cart', cart_destroy_path, method: :post
+
+    -else
+      %button
+        = link_to 'Sign-in to Checkout', new_user_session_path
 
   .bottom_links
     =link_to 'Home', root_path

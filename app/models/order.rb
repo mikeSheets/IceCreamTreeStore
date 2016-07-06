@@ -4,18 +4,53 @@ class Order < ActiveRecord::Base
   belongs_to :address
   has_one :payment
 
-  CART = "cart"
-  PLACED = "placed"
-  CANCELLED = "cancelled"
 
-  STATES = [CART, PLACED, CANCELLED]
-  validates(:state, inclusion: STATES)
 
-  before_save :validate_state_change
+  self.state_machine({
+      cart: [:placed],
+      placed: [:cancelled],
+      cancelled: []
+  })
 
-  after_initialize :set_default_state
+  before_transition_to :placed do |from, to|
 
-  # TODO - state machine
+    #loop through the order's items and check the quantity vs the available amount.
+    #if the amount available is greater than the amount ordered, inventory_tester stays true.
+    #if the amount if less than available, the inventory_tester changes to false.
+    order_items.each do |item|
+      if item.source.on_hand >= item.quantity
+        puts "#{item.source.name} is good to go."
+      else
+        errors[:base] << "#{item.source.name} does not have enough available inventory. Only #{item.source.on_hand} left."
+        item.update(quantity: item.source.on_hand)
+      end
+    end
+
+    return false if errors.present?
+
+    #if the inventory_tester is true for all the order items, then loop through the items one more again
+    #to adjust the amount available and the amount on hand.
+    #
+    #if there was an item that was short, dont update the order items yet.
+
+    order_items.each do |item|
+      item.source.on_hand -= item.quantity
+      item.source.save
+    end
+
+    order_total = order_items.to_a.sum{|x| x.source.price * x.quantity}
+    payment = Payment.find_or_initialize_by(order_id: self.id)
+    payment.amount = order_total
+
+    if payment.persisted?
+      puts payment.inspect
+    else
+      errors[:base] << "Payment failed"
+    end
+
+    # TODO
+    # order.delete??
+  end
 
   def serializable_hash(options={})
     {
@@ -24,26 +59,6 @@ class Order < ActiveRecord::Base
     }.merge(super(options))
   end
 
-  def validate_state_change
-    old = changed_attributes["state"]
-    newb = state
-    old_index = STATES.index(old)
-    new_index = STATES.index(newb)
-
-
-    if !persisted?
-      errors.add(:state, "initial state must be #{STATES.first}") if self.state != STATES.first
-    elsif new_index.nil?
-      errors.add(:state, "#{newb} is not a valid state")
-    elsif new_index != (old_index + 1)
-      errors.add(:state, "Cannot transition from #{newb} to #{old}")
-    end
-    errors.empty?
-  end
-
-  def set_default_state
-    self.state ||= STATES.first
-  end
 
 end
 

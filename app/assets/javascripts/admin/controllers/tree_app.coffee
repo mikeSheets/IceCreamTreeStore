@@ -23,6 +23,20 @@ app.controller 'BodyController', ($scope, Order, OrderItem) ->
       count += parseInt(item.quantity)
     $scope.cart.product_count = count
 
+app.controller 'CheckoutController', ($scope, Order, Cc, Product) ->
+  Order.cart().$promise.then (order) ->
+    $scope.order = order
+
+  $scope.place_order = () ->
+    if $scope.placing_order
+      return
+    $scope.placing_order = true
+    $scope.order.state = 'placed'
+    $scope.order.address_id = address.id
+    $scope.order.user_id = address.user_id
+    $scope.order.$update()
+    $scope.placing_order = false
+
 app.controller 'ProductsController', ($scope, Product) ->
   $scope.init = (products) ->
     $scope.products = products.map (product) ->
@@ -70,7 +84,10 @@ app.controller 'AddressController', ($scope, Address, State) ->
     else
       promise = $scope.address.$save()
 
-    promise.catch (errors) ->
+    promise.then (address) ->
+      $scope.$parent.order.address_id = address.id
+      $scope.$parent.order.user_id = address.user_id
+    .catch (errors) ->
       $scope.errors = errors
 
 app.controller 'CreditCardController', ($scope, Cc) ->
@@ -87,10 +104,3 @@ app.controller 'CreditCardController', ($scope, Cc) ->
     promise.catch (errors) ->
       $scope.errors = errors
 
-app.controller 'CheckoutController', ($scope, Order, Cc, Product) ->
-  $scope.order = Order.cart()
-  $scope.place_order = () ->
-    if $scope.placing_order
-      return
-    $scope.placing_order = true
-    $scope.order.state = 'placed'

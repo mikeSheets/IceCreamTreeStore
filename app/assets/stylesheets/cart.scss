@@ -74,7 +74,15 @@ select.form-control{
   width: 55px;
 }
 
-tr.bill-row{
+.to_checkout{
+  background-color: $tertiary;
+}
+
+.empty_cart{
+  background-color: #B00100;
+  a{
+    color: $secondary;
+  }
 }
 
 .checkout-link{

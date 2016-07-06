@@ -60,3 +60,5 @@ gem 'credit_card_validator'
 gem 'bootstrap-sass', '~> 3.3.6'
 
 gem 'autoprefixer-rails'
+
+gem 'ar_state_machine',   git: 'git://github.com/wantable/ar_state_machine.git'

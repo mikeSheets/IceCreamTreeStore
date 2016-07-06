@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     namespace :v1 do 
       resources :orders do 
         get 'cart', on: :collection, to: 'orders#get_cart'
+        put 'update', on: :member
       end
       resources :products do
         post 'add_product', on: :member

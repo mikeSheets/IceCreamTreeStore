@@ -11,9 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160524140723) do
+ActiveRecord::Schema.define(version: 20160629202317) do
 
   create_table "addresses", force: :cascade do |t|
+    t.string   "name"
     t.string   "line1"
     t.string   "line2"
     t.string   "city"
@@ -71,8 +72,19 @@ ActiveRecord::Schema.define(version: 20160524140723) do
     t.integer  "available",   default: 0
     t.decimal  "price"
     t.string   "description"
+    t.string   "image"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
+  end
+
+  create_table "state_changes", force: :cascade do |t|
+    t.string   "previous_state"
+    t.string   "next_state"
+    t.integer  "created_by_id"
+    t.integer  "source_id"
+    t.string   "source_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "states", force: :cascade do |t|

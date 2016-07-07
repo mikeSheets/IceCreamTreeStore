@@ -1,2 +1,58 @@
-%H1 Cart#index
-%p Find me in app/views/cart/index.html.erb
+.container
+  %H3 Your current cart:
+  .cart_item{"ng-controller" => "CartController"}
+    %table.col-sm-12
+      %tr.col-headers
+        %th.item
+          Item
+        %th.quantity
+          Update
+        %th.quantity
+          Quantity
+        %th.price
+          Item Price
+        %th.price
+          Price
+
+      %tr{"ng-repeat" => "item in cart.order_items", "ng-controller" => "ItemController"}
+        %td.item
+          {{item.source.name}}
+        %td.quantity
+          .form-group
+            %select.form-control{"ng-model" => "item.quantity", "ng-change" => "add_product(item)", "ng-options" => "num for num in arr"}
+        %td.quantity
+          {{item.quantity}}
+        %td.price
+          {{item.source.price | currency}}
+        %td.price
+          {{(item.source.price)*(item.quantity) | currency}}
+      %tr
+        %td.item.total
+          Total:
+        %td.quantity
+          %button
+            = link_to 'Update', cart_path
+        %td.quantity.total
+          {{cart.product_count}}
+        %td.price.total
+        %td.price.total
+          {{total() | currency}}
+
+  %br
+  %br
+  %br
+  .checkout-link
+    -if user_signed_in?
+      %button.to_checkout
+        = link_to 'Checkout', checkout_path
+      %button.empty_cart
+        = link_to 'Empty Cart', cart_destroy_path, method: :post
+
+    -else
+      %button
+        = link_to 'Sign-in to Checkout', new_user_session_path
+
+  .bottom_links
+    =link_to 'Home', root_path
+    |
+    =link_to 'Products', products_path

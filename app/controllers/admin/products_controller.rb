@@ -1,12 +1,12 @@
 module Admin
-  class ProductsController < ApplicationController
-    layout "admin/application"
-    before_action :set_product, only: [:show, :edit, :update, :destroy]
+  class ProductsController < AdminController
+    load_resource find_by: :permalink
+    authorize_resource
+
 
     # GET /products
     # GET /products.json
     def index
-      @products = Product.all
     end
 
     # GET /products/1
@@ -16,16 +16,18 @@ module Admin
 
     # GET /products/new
     def new
-      @product = Product.new
+      @images = Dir.glob("app/assets/images/products/*.jpg")
     end
 
     # GET /products/1/edit
     def edit
+      @images = Dir.glob("app/assets/images/products/*.jpg")
     end
 
     # POST /products
     # POST /products.json
     def create
+
       @product = Product.new(product_params)
 
       respond_to do |format|
@@ -64,14 +66,10 @@ module Admin
     end
 
     private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_product
-      @product = Product.find_by_permalink(params[:id])
-    end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def product_params
-      params.require(:product).permit(:name, :permalink, :on_hand, :available, :price, :description)
+      params.require(:product).permit(:name, :permalink, :on_hand, :available, :price, :description, :image)
     end
   end
 end

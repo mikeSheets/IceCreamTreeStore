@@ -15,18 +15,72 @@
  */
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import "colors";
+
+.notice{
+  text-align: center;
+  margin: 0 auto;
+  color: $tertiary;
+}
+
+.container{
+  background: $primary;
+}
+
+body{
+  color: $primary-font;
+  background: $secondary;
+}
+
 
 .bgImage{
-  height: 200px;
+  height: 250px;
   max-width: 100%;
-  background: image-url('ictHeader.jpg') center;
+  background: image-url('icecreameating.jpg') center;
   background-size: cover;
   .name{
-    margin-left: 10% ;
-    line-height: 200px;
-    font-size: 25px;
-    font-weight: bolder;
-    color: #ffffff;
+    text-align: center;
+    margin: 0 auto;
+    a {
+      font-family: 'Cabin Sketch', cursive;
+      line-height: 300px;
+      font-size: 35px;
+      color: $secondary-font;
+    }
   }
 }
 
+.page-search{
+  position: absolute;
+  right: 0;
+  top: 224px;
+  margin-right: 5px;
+  input{
+    width: 205px;
+  }
+}
+
+.top-buttons {
+  margin: 0 10px;
+  float: right;
+  position: absolute;
+  right: 0;
+  top: 0;
+  color: $primary-font;
+  .btn-group {
+    width: 25%;
+    background-color: $primary;
+    .btn.btn-default.dropdown-toggle {
+      width: 125px;
+    }
+    .dropdown-menu{
+      width: 125px;
+    }
+  }
+}
+
+.cart.pull-right{
+  margin: 8px;
+  color: $primary-font;
+
+}

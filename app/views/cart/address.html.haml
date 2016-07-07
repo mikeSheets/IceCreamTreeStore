@@ -1,2 +1,13 @@
-<h1>Cart#address</h1>
-<p>Find me in app/views/cart/address.html.erb</p>
+%h1 Please enter your address
+.container
+  - if @address.persisted?
+    = form_for(@address, method: :put, url: edit_address_path(@address.id)) do |f|
+      =render partial: 'address_form', locals: {f: f}
+      .bottom_links
+        = link_to 'Back', cart_path
+  -else
+    = form_for(@address, url: add_address_path) do |f|
+      =render partial: 'address_form', locals: {f: f}
+      .bottom_links
+        = link_to 'Back', cart_path
+=console

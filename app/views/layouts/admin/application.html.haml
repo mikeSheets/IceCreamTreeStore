@@ -2,12 +2,33 @@
 %html
   %head
     %title Mike's Ice Cream Tree's
-    = stylesheet_link_tag    'admin/application', media: 'all', 'data-turbolinks-track' => true
-    = javascript_include_tag 'admin/application', 'data-turbolinks-track' => true
+    = stylesheet_link_tag    'admin/application', media: 'all'
+    = javascript_include_tag 'admin/application'
+    = javascript_include_tag 'application'
+    %link{:href => 'https://fonts.googleapis.com/css?family=Nosifer', :rel => "stylesheet", :type => "text/css"}/
     = csrf_meta_tags
-  %body
+  %body{"ng-app" => "treeApp", class: "#{action_name} #{controller_name}", 'ng-controller' => 'BodyController'}
+    .top-buttons
+      .btn-group
+        %button.btn.btn-default.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+          Login/Sign-up
+          %span.caret
+        %ul.dropdown-menu
+          %li= link_to 'Login', new_user_session_path
+          %li= link_to 'Sign-up', new_user_registration_path
+          %li= link_to 'Sign out', destroy_user_session_path
+      .cart_thing
+        =link_to cart_path, class: "cart pull-right" do
+          Cart
+          %span.badge{"ng-model" => "cart.product_count"}
+            ({{cart.product_count}})
     .header
       .bgImage
-        .name
-          Michael's Ice Cream Trees
-    = yield
+        .name= link_to "Michael's Ice Cream Trees", root_path
+
+
+
+    - flash.each do |name, msg|
+      = content_tag :div, msg, class: name
+    .page_content
+      = yield

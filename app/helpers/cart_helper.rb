@@ -3,7 +3,7 @@ module CartHelper
   def cart
     id = session[:cart_id]
     if id
-      order = Order.where(id: id).take
+      order = Order.where(id: id, state: Order::CART).take
     elsif user_signed_in?
       order = user.orders.where(state: Order::CART).take
     end

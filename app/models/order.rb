@@ -5,14 +5,13 @@ class Order < ActiveRecord::Base
   has_one :payment
 
 
-
   self.state_machine({
       cart: [:placed],
       placed: [:cancelled],
       cancelled: []
   })
 
-  before_transition_to :placed do |from, to|
+  before_transition_to :placed do
 
     #loop through the order's items and check the quantity vs the available amount.
     #if the amount available is greater than the amount ordered, inventory_tester stays true.
@@ -39,21 +38,21 @@ class Order < ActiveRecord::Base
     end
 
     order_total = order_items.to_a.sum{|x| x.source.price * x.quantity}
-    payment = Payment.find_or_initialize_by(credit_card: user.credit_card)
+    payment = Payment.find_or_initialize_by(credit_card: user.credit_card, order_id: id, state: Payment::PENDING)
     payment.amount = order_total
-    payment.state = Payment::COMPLETED
-    payment.save
 
-    self.payment = payment
-    
-    if payment.persisted?
-      puts "Payment state is :  #{payment.state}"
-    else
-      return errors[:base] << "Payment failed"
+    unless payment.save
+      errors[:base] << payment.errors.map{|k, v| "Payment Error #{k}: #{v.join(",")}"}
     end
+
+    unless payment.make_completed
+      errors[:base] << payment.errors.map{|k, v| "Payment Error #{k}: #{v.join(",")}"}
+    end
+
 
     # TODO
     # order.delete??
+    errors.empty?
   end
 
   def serializable_hash(options={})

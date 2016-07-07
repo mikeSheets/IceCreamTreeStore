@@ -91,9 +91,6 @@ class CheckoutController < ApplicationController
   end
 
 
-
-
-
   # Adding and removing product from cart
 
   def add_product
@@ -115,7 +112,7 @@ class CheckoutController < ApplicationController
     cart.state = Order::CANCELLED
     cart.delete
 
-    redirect_to cart_path
+    redirect_to products_path
   end
 
 

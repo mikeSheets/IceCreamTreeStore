@@ -88,7 +88,7 @@ app.controller 'CreditCardController', ($scope, Cc) ->
     promise.catch (errors) ->
       $scope.errors = errors
 
-app.controller 'CheckoutController', ($scope, Order, Cc, Product) ->
+app.controller 'CheckoutController', ($scope, Order, Cc, Product, $window) ->
   Order.cart().$promise.then (order) ->
     $scope.order = order
 
@@ -96,6 +96,11 @@ app.controller 'CheckoutController', ($scope, Order, Cc, Product) ->
     if $scope.placing_order
       return
     $scope.placing_order = true
+
     $scope.order.state = 'placed'
     order = new Order($scope.order)
-    $scope.order.$update()
+    $scope.order.$update().then (order) ->
+      $scope.placing_order = false
+      $window.location.href = "/orders/#{order.id}"
+    .catch (errors) ->
+      console.log errors

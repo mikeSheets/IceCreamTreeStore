@@ -39,13 +39,17 @@ class Order < ActiveRecord::Base
     end
 
     order_total = order_items.to_a.sum{|x| x.source.price * x.quantity}
-    payment = Payment.find_or_initialize_by(order_id: self.id)
+    payment = Payment.find_or_initialize_by(credit_card: user.credit_card)
     payment.amount = order_total
+    payment.state = Payment::COMPLETED
+    payment.save
 
+    self.payment = payment
+    
     if payment.persisted?
-      puts payment.inspect
+      puts "Payment state is :  #{payment.state}"
     else
-      errors[:base] << "Payment failed"
+      return errors[:base] << "Payment failed"
     end
 
     # TODO
@@ -58,7 +62,6 @@ class Order < ActiveRecord::Base
       order_items: order_items.map(&:serializable_hash)
     }.merge(super(options))
   end
-
 
 end
 

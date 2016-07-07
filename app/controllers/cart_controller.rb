@@ -72,6 +72,11 @@ class CartController < ApplicationController
   def place_order
     cart.state = Order::PLACED
     cart.save
+
+    payment.state = Payment::COMPLETED
+    payment.save
+
+
     # TODo validation and stuff
   end
 

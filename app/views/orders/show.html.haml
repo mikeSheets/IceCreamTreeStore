@@ -1,2 +1,110 @@
-%h1 Orders#show
-%p Find me in app/views/orders/show.html.haml
+%h1 Order completed
+.container
+  .address_box.col-sm-4
+    %h3.checkout_label
+      Address
+    %table
+      %tbody.address_block
+        %tr
+          %td
+            %label.check_address
+              Name
+          %td
+            .address_input
+              = @order.address.name
+        %tr
+          %td
+            %label.check_address
+              Line 1
+          %td
+            .address_input
+              = @order.address.line1
+        %tr
+          %td
+            .check_address
+              Line 2
+          %td
+            .address_input
+              = @order.address.line2
+        %tr
+          %td
+            .check_address
+              City
+          %td
+            .address_input
+              = @order.address.city
+        %tr
+          %td
+            .check_address
+              State
+          %td
+            .address_input
+              = @order.address.state.name
+        %tr
+          %td
+            .check_address
+              Zipcode
+          %td
+            .address_input
+              = @order.address.zip
+  .billing_box.col-sm-4
+    %h3.checkout_label
+      Billing
+    %table
+      %tbody.cc_block
+        %tr
+          %td
+            %label.check_cc
+              Name on card
+          %td
+            .address_input
+              = @payment.credit_card.name
+        %tr
+          %td
+            %label.check_cc
+              Credit Card Number
+          %td
+            .address_input
+        %tr
+          %td
+            %label.check_cc
+              Expiration month
+          %td
+            .address_input
+        %tr
+          %td
+            %label.check_cc
+              Expiration year
+          %td
+            .address_input
+        %tr
+          %td
+            %label.check_cc
+              CVC
+          %td
+            .address_input
+  .cart_box.col-sm-4
+    %h3.checkout_label
+      Order Items
+    %table
+      %tr.col-headers
+        %th.item
+          Item
+        %th.quantity
+          Quantity
+        %th.price
+          Price
+      %tr
+        %td.item
+          {{item.source.name}}
+        %td.quantity
+          .form-group
+        %td.price
+          {{(item.source.price)*(item.quantity) | currency}}
+      %tr
+        %td.item.total
+          Total:
+        %td.quantity.total
+          {{cart.product_count}}
+        %td.price.total
+          {{total() | currency}}

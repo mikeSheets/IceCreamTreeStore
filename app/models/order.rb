@@ -4,6 +4,7 @@ class Order < ActiveRecord::Base
   belongs_to :address
   has_one :payment
 
+  attr_accessor :credit_card_id
 
   self.state_machine({
       cart: [:placed],
@@ -12,6 +13,11 @@ class Order < ActiveRecord::Base
   })
 
   before_transition_to :placed do
+
+    # TODO set address to user.address, if no user.address add validation and return false
+
+    address = user.address
+    address.save
 
     #loop through the order's items and check the quantity vs the available amount.
     #if the amount available is greater than the amount ordered, inventory_tester stays true.
@@ -38,20 +44,18 @@ class Order < ActiveRecord::Base
     end
 
     order_total = order_items.to_a.sum{|x| x.source.price * x.quantity}
-    payment = Payment.find_or_initialize_by(credit_card: user.credit_card, order_id: id, state: Payment::PENDING)
+
+    payment = Payment.find_or_initialize_by(credit_card_id: credit_card_id, order_id: id, state: Payment::PENDING)
     payment.amount = order_total
 
     unless payment.save
-      errors[:base] << payment.errors.map{|k, v| "Payment Error #{k}: #{v.join(",")}"}
+      errors[:base] << payment.errors.map{|k, v| "Payment Error #{k}: #{v}"}
     end
 
     unless payment.make_completed
-      errors[:base] << payment.errors.map{|k, v| "Payment Error #{k}: #{v.join(",")}"}
+      errors[:base] << payment.errors.map{|k, v| "Payment Error #{k}: #{v}"}
     end
 
-
-    # TODO
-    # order.delete??
     errors.empty?
   end
 

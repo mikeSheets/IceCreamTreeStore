@@ -8,7 +8,6 @@
 #admin
 
 
-
 app = angular.module('treeApp')
 
 app.controller 'BodyController', ($scope, Order, OrderItem) ->
@@ -16,6 +15,12 @@ app.controller 'BodyController', ($scope, Order, OrderItem) ->
 
   #  This add_product uses item.id for the product page.
   $scope.add_product = (item) ->
+    if item.quantity == 0
+      $scope.remove = (item) ->
+        oi = new OrderItem(source_id: item.id, source_type: "Product", quantity: item.quantity, order_id: $scope.cart.id)
+        oi.$save()
+        oi.$delete()
+
     oi = new OrderItem(source_id: item.id, source_type: "Product", quantity: item.quantity, order_id: $scope.cart.id)
     oi.$save()
     count = 0
@@ -23,29 +28,13 @@ app.controller 'BodyController', ($scope, Order, OrderItem) ->
       count += parseInt(item.quantity)
     $scope.cart.product_count = count
 
-app.controller 'CheckoutController', ($scope, Order, Cc, Product) ->
-  Order.cart().$promise.then (order) ->
-    $scope.order = order
-
-  $scope.place_order = () ->
-    if $scope.placing_order
-      return
-    $scope.placing_order = true
-    $scope.order.state = 'placed'
-    $scope.order.address_id = address.id
-    $scope.order.user_id = address.user_id
-    $scope.order.$update()
-    $scope.placing_order = false
-
 app.controller 'ProductsController', ($scope, Product) ->
   $scope.init = (products) ->
     $scope.products = products.map (product) ->
       new Product(product)
 
 app.controller 'ProductController', ($scope) ->
-  $scope.selectOp = () ->
-    arr = [1..($scope.product.available)]
-    return arr
+  $scope.prod_arr = [0..($scope.product.on_hand)]
 
 app.controller 'CartController', ($scope, Product, OrderItem) ->
   $scope.init = (products) ->
@@ -60,6 +49,11 @@ app.controller 'CartController', ($scope, Product, OrderItem) ->
 
   #   This add_product is used for the cart page and uses item.source.id
   $scope.add_product = (item) ->
+    if item.quantity == 0
+      $scope.remove_item = (item) ->
+        oi = new OrderItem(source_id: item.source.id, source_type: "Product", quantity: item.quantity, order_id: $scope.cart.id)
+        oi.$save()
+        oi.$delete()
     oi = new OrderItem(source_id: item.source.id, source_type: "Product", quantity: item.quantity, order_id: $scope.cart.id)
     oi.$save()
     count = 0
@@ -69,7 +63,7 @@ app.controller 'CartController', ($scope, Product, OrderItem) ->
 
 app.controller 'ItemController', ($scope) ->
   $scope.price = ($scope.item.quantity*$scope.item.source.price)
-  $scope.arr = [1..($scope.item.source.available)]
+  $scope.arr = [0..($scope.item.source.on_hand)]
 
 app.controller 'AddressController', ($scope, Address, State) ->
   $scope.states = State.query()
@@ -86,7 +80,7 @@ app.controller 'AddressController', ($scope, Address, State) ->
 
     promise.then (address) ->
       $scope.$parent.order.address_id = address.id
-      $scope.$parent.order.user_id = address.user_id
+
     .catch (errors) ->
       $scope.errors = errors
 
@@ -104,3 +98,19 @@ app.controller 'CreditCardController', ($scope, Cc) ->
     promise.catch (errors) ->
       $scope.errors = errors
 
+app.controller 'CheckoutController', ($scope, Order, Cc, Product, $window) ->
+  Order.cart().$promise.then (order) ->
+    $scope.order = order
+
+  $scope.place_order = () ->
+    if $scope.placing_order
+      return
+    $scope.placing_order = true
+
+    $scope.order.state = 'placed'
+    order = new Order($scope.order)
+    $scope.order.$update().then (order) ->
+      $scope.placing_order = false
+      $window.location.href = "/orders/#{order.id}"
+    .catch (errors) ->
+      console.log errors

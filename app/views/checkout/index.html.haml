@@ -1,6 +1,6 @@
 %h1 Checkout
 .container{"ng-controller" => "CheckoutController"}
-  .address_box.col-sm-4{"ng-controller" => "AddressController", "ng-init" => "address_init(#{current_user.address.to_json})"}
+  .address_box.col-sm-4{"ng-init" => "address_init(#{current_user.address.to_json})"}
     %h3.checkout_label
       Address
     %div{'ng-if' => 'errors'}
@@ -45,7 +45,7 @@
             %input.address_input{"ng-model" => "address.zip"}
     %button.checkout_click{"ng-click" => "updateAddress()"}
       Update address
-  .billing_box.col-sm-4{"ng-controller" => "CreditCardController", "ng-init" => "cc_init(#{current_user.credit_card.to_json})"}
+  .billing_box.col-sm-4{"ng-init" => "cc_init(#{current_user.credit_card.to_json})"}
     %h3.checkout_label
       Billing
     %div{'ng-if' => 'errors'}
@@ -112,3 +112,7 @@
           {{total() | currency}}
     %button.checkout_click{"ng-click" => "place_order()"}
       Place order
+
+
+.thing
+=console

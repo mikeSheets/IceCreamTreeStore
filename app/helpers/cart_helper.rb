@@ -8,7 +8,9 @@ module CartHelper
       order = user.orders.where(state: Order::CART).take
     end
 
-    unless order
+    if order
+      order.update(user_id: current_user.id) if !order.user_id and user_signed_in?
+    else
       order = Order.create(user_id: current_user.try(:id))
     end
 

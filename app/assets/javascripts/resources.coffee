@@ -35,7 +35,7 @@ app.factory('OrderItem', ['$resource', ($resource) ->
 ])
 
 app.factory('Address', ['$resource', ($resource) ->
-  $resource '/api/v1/address/:id',
+  $resource '/api/v1/addresses/:id',
     {
       id: '@id'
     },
@@ -53,7 +53,7 @@ app.factory('State', ['$resource', ($resource, $options) ->
 ])
 
 app.factory('Cc', ['$resource', ($resource) ->
-  $resource '/api/v1/credit_card/:id',
+  $resource '/api/v1/credit_cards/:id',
     {
       id: '@id'
     },

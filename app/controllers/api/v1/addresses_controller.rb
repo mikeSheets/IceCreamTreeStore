@@ -3,12 +3,14 @@ class Api::V1::AddressesController < ApplicationController
   def create
     authorize! :address, :checkout
 
-    address = current_user.address || Address.new(name: current_user.name)
+    address = Address.new(address_params)
+
+    address.user_id = current_user.id
 
     if address.save
       render json: address.to_json
     else
-      # TODO
+      render json: address.errors.to_json, status: 400
     end
   end
 
@@ -17,7 +19,7 @@ class Api::V1::AddressesController < ApplicationController
     if address.update(address_params)
       render json: address.to_json
     else
-      # TODO
+      render json: address.errors.to_json, status: 400
     end
 
   end

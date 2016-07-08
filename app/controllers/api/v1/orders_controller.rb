@@ -1,5 +1,5 @@
 class Api::V1::OrdersController < ApplicationController
-
+  wrap_parameters include: Order.column_names + [:credit_card_id]
 
   def get_cart
     render json: cart.to_json
@@ -18,7 +18,7 @@ class Api::V1::OrdersController < ApplicationController
   protected
 
   def order_params
-    params.require(:order).permit(:user_id, :address_id, :state)
+    params.require(:order).permit(:user_id, :address_id, :state, :credit_card_id)
   end
 
 end

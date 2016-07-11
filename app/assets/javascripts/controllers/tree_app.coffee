@@ -55,7 +55,7 @@ app.controller 'CartController', ($scope, Product, OrderItem) ->
       count += parseInt(item.quantity)
     $scope.cart.product_count = count
 
-app.controller 'CheckoutController', ($scope, Order, Cc, Product, $window, $q, Address, State) ->
+app.controller 'CheckoutController', ($scope, $window, $q, Order, Cc, Product, Address, State) ->
   Order.cart().$promise.then (order) ->
     $scope.order = order
 
@@ -71,7 +71,6 @@ app.controller 'CheckoutController', ($scope, Order, Cc, Product, $window, $q, A
       $scope.address = new Address(feed)
     else
       $scope.address = new Address()
-
 
   $scope.place_order = () ->
     if $scope.placing_order
@@ -99,23 +98,33 @@ app.controller 'CheckoutController', ($scope, Order, Cc, Product, $window, $q, A
   $scope.updateAddress = () ->
     if $scope.address.id?
       promise = $scope.address.$update()
+      delete $scope.address_errors
     else
       promise = $scope.address.$save()
+      delete $scope.address_errors
 
     promise.then () ->
-      $scope.$parent.order.address_id = $scope.address.id
-      delete $scope.errors
-    .catch (errors) ->
-      $scope.address_errors = errors.data
-      
+      $scope.order.address_id = $scope.address.id
+      delete $scope.address_errors
+    promise.catch (errors) ->
+      $scope.address_errors = $scope.strip(errors.data)
+
   $scope.updateBilling = () ->
     if $scope.cc.id?
       promise = $scope.cc.$update()
+      delete $scope.cc_errors
     else
       promise = $scope.cc.$save()
+      delete $scope.cc_errors
 
     promise.then ()->
-      $scope.$parent.order.credit_card_id = $scope.cc.id
+      $scope.order.credit_card_id = $scope.cc.id
+      delete $scope.cc_errors
     promise.catch (errors) ->
-      $scope.cc_errors = errors
+      $scope.cc_errors = $scope.strip(errors.data)
 
+  $scope.strip = (clothes) ->
+    clean_errors = {}
+    angular.forEach clothes, (errors, key) ->
+      clean_errors[key.charAt(0).toUpperCase() + key.substr(1).toLowerCase()] = errors.join(", ")
+    clean_errors

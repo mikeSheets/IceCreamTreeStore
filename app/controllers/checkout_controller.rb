@@ -5,8 +5,6 @@ class CheckoutController < ApplicationController
   end
 
 
-
-
   # Entering and editing Addresses
 
   def address

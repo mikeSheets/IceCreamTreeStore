@@ -3,8 +3,9 @@
   .address_box.col-sm-4{"ng-init" => "address_init(#{current_user.address.to_json})"}
     %h3.checkout_label
       Address
-    %div{'ng-if' => 'errors'}
-      {{ errors }}
+    .errors{'ng-if' => 'address_errors', "ng-repeat" => "(key, value) in address_errors"}
+      .alert.alert-danger
+        {{ key }}: {{ value }}
     %table
       %tbody.address_block
         %tr
@@ -48,8 +49,9 @@
   .billing_box.col-sm-4{"ng-init" => "cc_init(#{current_user.credit_card.to_json})"}
     %h3.checkout_label
       Billing
-    %div{'ng-if' => 'errors'}
-      {{ errors }}
+    .errors{'ng-if' => 'cc_errors', "ng-repeat" => "(key, value) in cc_errors"}
+      .alert.alert-danger
+        {{ key }}: {{ value }}
     %table
       %tbody.cc_block
         %tr
@@ -112,7 +114,3 @@
           {{total() | currency}}
     %button.checkout_click{"ng-click" => "place_order()"}
       Place order
-
-
-.thing
-=console

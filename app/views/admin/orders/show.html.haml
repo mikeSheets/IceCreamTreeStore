@@ -113,3 +113,9 @@
           = @order.order_items.to_a.sum(&:quantity)
         %td.price.total
           = number_to_currency @order.order_items.to_a.sum{|x| x.source.price*x.quantity}
+
+
+  .bottom_links
+    = link_to 'Admin Product Page', admin_products_path
+    |
+    = link_to 'Admin Orders', admin_orders_path

@@ -26,3 +26,8 @@
             = number_to_currency order.payment.amount
           %td.view
             = link_to 'View Order', admin_order_path(order.id)
+
+  %br
+  %br
+  .bottom_links
+    = link_to 'Admin Product Page', admin_products_path

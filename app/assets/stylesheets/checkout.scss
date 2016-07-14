@@ -35,6 +35,12 @@ button.checkout_click {
   text-align: center;
 }
 
+.alert.alert-danger{
+  background-color: $secondary-font;
+  border-color: $primary-font;
+  color: $primary;
+}
+
 
 .thing{
   height: 200px;

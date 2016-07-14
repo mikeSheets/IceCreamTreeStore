@@ -61,19 +61,29 @@ body{
 }
 
 .top-buttons {
-  margin: 0 10px;
-  float: right;
+  margin: 0;
   position: absolute;
-  right: 0;
+  right: 0px;
   top: 0;
   color: $primary-font;
   .btn-group {
     background-color: $primary;
     .btn.btn-default.dropdown-toggle {
       width: 125px;
+      min-width: 125px;
+      max-width: 125px;
     }
     .dropdown-menu{
-      width: 125px;
+      width: auto!important;
+      max-width: 125px;
+      min-width: 125px;
+      li {
+        margin: 0;
+        padding: 0;
+        a{
+          padding: 0 10px;
+        }
+      }
     }
   }
 }

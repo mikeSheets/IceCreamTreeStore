@@ -5,7 +5,7 @@ module CartHelper
     if id
       order = Order.where(id: id, state: Order::CART).take
     elsif user_signed_in?
-      order = user.orders.where(state: Order::CART).take
+      order = current_user.orders.where(state: Order::CART).take
     end
 
     if order

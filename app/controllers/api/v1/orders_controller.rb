@@ -8,7 +8,9 @@ class Api::V1::OrdersController < ApplicationController
         message: ["permission denied"]
       }, status: 302
     else
-      render
+      render json: {
+          message: ["Not logged in"]
+      }, status: 303
     end
   end
 

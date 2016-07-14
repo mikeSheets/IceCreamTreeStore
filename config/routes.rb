@@ -43,7 +43,7 @@ Rails.application.routes.draw do
   post 'cart/add_cc', to: 'cart#add_cc', as: :add_cc
   get 'cart/checkout', to: 'cart#checkout'
   get 'checkout', to: 'checkout#index'
-  get 'account', to: 'home#account'
+  get 'account', to: 'home#account', as: :account
 
 
   resources :orders, only: :show

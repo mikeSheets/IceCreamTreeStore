@@ -16,6 +16,16 @@ h1{
   width: 100%;
   .panel-body {
     margin: 0 auto;
+    .image_box{
+      max-height: 350px;
+      height: 350px;
+      img{
+        max-width: 100%;
+        max-height: 100%;
+        margin: auto auto;
+        display: block;
+      }
+    }
     .admin_link {
       width: 100%;
       text-align: center;

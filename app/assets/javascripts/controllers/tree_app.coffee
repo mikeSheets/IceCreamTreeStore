@@ -3,7 +3,6 @@ app = angular.module('treeApp')
 app.controller 'BodyController', ($scope, Order, OrderItem) ->
   $scope.cart = Order.cart()
 
-#  This add_product uses item.id for the product page.
   $scope.add_product = (item) ->
     if item.quantity == 0
       $scope.remove = (item) ->
@@ -41,7 +40,6 @@ app.controller 'CartController', ($scope, Product, OrderItem) ->
       tot += (item.quantity*item.source.price))
     tot
 
-  #   This add_product is used for the cart page and uses item.source.id
   $scope.add_product = (item) ->
     if item.quantity == 0
       $scope.remove_item = (item) ->
@@ -93,7 +91,7 @@ app.controller 'CheckoutController', ($scope, $window, $q, Order, Cc, Product, A
         $window.location.href = "/orders/#{order.id}"
       .catch (errors) ->
         $scope.placing_order = false
-        console.log errors
+        $scope.order_errors = $scope.strip(errors.data)
 
   $scope.updateAddress = () ->
     if $scope.address.id?

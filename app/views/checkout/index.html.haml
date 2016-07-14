@@ -89,6 +89,9 @@
   .cart_box.col-sm-4{"ng-controller" => "CartController"}
     %h3.checkout_label
       Order Items
+    .errors{'ng-if' => 'order_errors', "ng-repeat" => "(key, value) in order_errors"}
+      .alert.alert-danger
+        Sorry{{ value }}
     %table
       %tr.col-headers
         %th.item

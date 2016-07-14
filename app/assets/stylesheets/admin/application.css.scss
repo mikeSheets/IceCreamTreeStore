@@ -49,13 +49,10 @@
   top: 0;
   color: $primary-font;
   .btn-group {
-    width: 25%;
     background-color: $primary;
     .btn.btn-default.dropdown-toggle {
-      width: 125px;
-    }
-    .dropdown-menu{
-      width: 125px;
+      padding: 10px;
+      width: auto !important;
     }
   }
 }

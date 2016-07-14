@@ -12,6 +12,7 @@ class Api::V1::ProductsController < ApplicationController
       flash[:alert] = product.errors.map{|name, err| "#{name}: #{err}"}.join(", ")
       end
     end
+
     render json: product.to_json
   end
 end

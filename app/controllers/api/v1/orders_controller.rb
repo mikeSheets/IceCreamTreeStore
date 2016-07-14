@@ -1,5 +1,16 @@
 class Api::V1::OrdersController < ApplicationController
+  load_and_authorize_resource :order
   wrap_parameters include: Order.column_names + [:credit_card_id]
+
+  rescue_from CanCan::AccessDenied do |exception|
+    if user_signed_in?
+      render json: {
+        message: ["permission denied"]
+      }, status: 302
+    else
+      render
+    end
+  end
 
   def get_cart
     render json: cart.to_json
@@ -16,9 +27,7 @@ class Api::V1::OrdersController < ApplicationController
   end
 
   protected
-
   def order_params
     params.require(:order).permit(:user_id, :address_id, :state, :credit_card_id)
   end
-
 end

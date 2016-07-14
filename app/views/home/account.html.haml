@@ -1,0 +1,114 @@
+%h1 User account
+.container.info{"ng-controller" => "CheckoutController"}
+  .address_billing.col-sm-6
+    .address_box{"ng-init" => "address_init(#{current_user.address.to_json})"}
+      %h3.checkout_label
+        Address
+      .errors{'ng-if' => 'address_errors', "ng-repeat" => "(key, value) in address_errors"}
+        .alert.alert-danger
+          {{ key }}: {{ value }}
+      %table
+        %tbody.address_block
+          %tr
+            %td
+              %label.check_address
+                Name
+            %td
+              %input.address_input{"ng-model" => "address.name"}
+          %tr
+            %td
+              %label.check_address
+                Line 1
+            %td
+              %input.address_input{"ng-model" => "address.line1"}
+          %tr
+            %td
+              %label.check_address
+                Line 2
+            %td
+              %input.address_input{"ng-model" => "address.line2"}
+          %tr
+            %td
+              %label.check_address
+                City
+            %td
+              %input.address_input{"ng-model" => "address.city"}
+          %tr
+            %td
+              %label.check_address
+                State
+            %td
+              %select.address_input.form-control{"ng-model" => "address.state_id", "ng-options" => "state.id as state.name for state in states"}
+          %tr
+            %td
+              %label.check_address
+                Zipcode
+            %td
+              %input.address_input{"ng-model" => "address.zip"}
+      %button.checkout_click{"ng-click" => "updateAddress()"}
+        Update address information
+    .billing_box{"ng-init" => "cc_init(#{current_user.credit_card.to_json})"}
+      %h3.checkout_label
+        Billing
+      .errors{'ng-if' => 'cc_errors', "ng-repeat" => "(key, value) in cc_errors"}
+        .alert.alert-danger
+          {{ key }}: {{ value }}
+      %table
+        %tbody.cc_block
+          %tr
+            %td
+              %label.check_cc
+                Name on card
+            %td
+              %input.address_input{"ng-model" => "cc.name"}
+          %tr
+            %td
+              %label.check_cc
+                Credit Card Number
+            %td
+              %input.address_input{"ng-model" => "cc.number", "placeholder" => "XXXXXXXXXXXX{{cc.last_four}}"}
+          %tr
+            %td
+              %label.check_cc
+                Expiration month
+            %td
+              %input.address_input{"ng-model" => "cc.month"}
+          %tr
+            %td
+              %label.check_cc
+                Expiration year
+            %td
+              %input.address_input{"ng-model" => "cc.year"}
+          %tr
+            %td
+              %label.check_cc
+                CVC
+            %td
+              %input.address_input{"ng-model" => "cc.cvc", "placeholder" => "XXX"}
+      %button.checkout_click{"ng-click" => "updateBilling()"}
+        Update billing information
+  .placed_orders.col-sm-6
+    .cart_box.col-sm-4{"ng-controller" => "CartController"}
+    %h3.checkout_label
+      Placed orders
+    %table
+      %tbody
+      %tr.headers
+        %th.order_num
+          Order number
+        %th.quant
+          Item Quantity
+        %th.order_total
+          Order Total
+        %th.view
+          Order Details
+      - @orders.each do |order|
+        %tr.order
+          %td.order_num
+            = order.id
+          %td.qty
+            = order.order_items.to_a.sum(&:quantity)
+          %td.total
+            = number_to_currency order.payment.amount
+          %td.view
+            = link_to 'View Order', order_path(order.id)

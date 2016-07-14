@@ -11,9 +11,10 @@ class Ability
         can  :access, :admin
       end
 
-      can [:index, :address, :billing, :checkout], :cart
-      can [:index, :address, :billing, :checkout], :checkout
-      can :crud, Address, user_id: user.id
+      can [:read, :update, :get_cart], Order, user_id: user.id
+      can [:create, :read, :update], Address, user_id: user.id
+      can [:create, :read, :update], CreditCard, user_id: user.id
+
     end
   end
 end

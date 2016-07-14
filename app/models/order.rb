@@ -16,12 +16,17 @@ class Order < ActiveRecord::Base
 
     # TODO set address to user.address, if no user.address add validation and return false
 
-    address = user.address
-    address.save
+    unless address = user.address
+      address.save
+    else
+      errors[:base] << address.errors.map{|k, v| "Cannot place order with no address. #{k}:  #{v}"}
+      return false if errors.present?
+    end
 
-    #loop through the order's items and check the quantity vs the available amount.
-    #if the amount available is greater than the amount ordered, inventory_tester stays true.
-    #if the amount if less than available, the inventory_tester changes to false.
+    if order_items.to_a.sum{|x| x.quantity} == 0
+      errors[:base] << "Cannot place an order with no items."
+      return false if errors.present?
+    end
     order_items.each do |item|
       if item.source.on_hand >= item.quantity
         puts "#{item.source.name} is good to go."
@@ -33,29 +38,20 @@ class Order < ActiveRecord::Base
 
     return false if errors.present?
 
-    #if the inventory_tester is true for all the order items, then loop through the items one more again
-    #to adjust the amount available and the amount on hand.
-    #
-    #if there was an item that was short, dont update the order items yet.
-
     order_items.each do |item|
       item.source.on_hand -= item.quantity
       item.source.save
     end
 
     order_total = order_items.to_a.sum{|x| x.source.price * x.quantity}
-
     payment = Payment.find_or_initialize_by(credit_card_id: credit_card_id, order_id: id, state: Payment::PENDING)
     payment.amount = order_total
-
     unless payment.save
       errors[:base] << payment.errors.map{|k, v| "Payment Error #{k}: #{v}"}
     end
-
     unless payment.make_completed
       errors[:base] << payment.errors.map{|k, v| "Payment Error #{k}: #{v}"}
     end
-
     errors.empty?
   end
 

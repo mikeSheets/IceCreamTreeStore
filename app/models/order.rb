@@ -14,8 +14,6 @@ class Order < ActiveRecord::Base
 
   before_transition_to :placed do
 
-    # TODO set address to user.address, if no user.address add validation and return false
-
     unless address = user.address
       address.save
     else
@@ -53,6 +51,11 @@ class Order < ActiveRecord::Base
       errors[:base] << payment.errors.map{|k, v| "Payment Error #{k}: #{v}"}
     end
     errors.empty?
+
+  end
+
+  after_transition_to :placed do
+    UserMailer.order_email(self.id).deliver_now
   end
 
   def serializable_hash(options={})

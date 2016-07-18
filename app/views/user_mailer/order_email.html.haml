@@ -11,7 +11,6 @@
       Your order number is:  #{@order.id}.
       %br
       Here's the order you placed:
-
     %h3.checkout_label
       Address
     %table
@@ -124,8 +123,6 @@
           #{@order.order_items.to_a.sum(&:quantity)}
         %td.price.total
           #{number_to_currency @order.order_items.to_a.sum{|x| x.source.price*x.quantity}}
-
-
     %p
       To login to the site, just follow this link: #{@url}.
     %p Thanks for ordering and have a great day!

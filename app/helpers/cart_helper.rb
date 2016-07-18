@@ -13,9 +13,7 @@ module CartHelper
     else
       order = Order.create(user_id: current_user.try(:id))
     end
-
     session[:cart_id] = order.id
-
     order
   end
 end

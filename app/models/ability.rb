@@ -4,7 +4,7 @@ class Ability
   def initialize(user)
     alias_action :create, :read, :update, :destroy, to: :crud
 
-    user ||= User.new # guest user (not logged in)
+    user ||= User.new
     if user.persisted?
       if user.role == User::ADMIN
         can :crud, Product

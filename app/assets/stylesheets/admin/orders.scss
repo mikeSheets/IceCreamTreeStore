@@ -1,10 +1,7 @@
 // Place all the styles related to the Orders controller here.
 // They will automatically be included in application.css.scss.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-h3{
-  text-align: center;
-}
 
-.order_num, .cust_name, .quant, .order_total, .view{
+h3, .order_num, .cust_name, .quant, .order_total, .view{
   text-align: center;
 }

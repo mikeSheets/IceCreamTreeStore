@@ -24,6 +24,11 @@
   margin: 0 auto;
 }
 
+.container{
+  background: $primary;
+  min-height: 200px;
+}
+
 .bgImage{
   height: 200px;
   max-width: 100%;
@@ -70,5 +75,4 @@
 .cart.pull-right{
   margin: 8px;
   color: $primary-font;
-
 }

@@ -3,9 +3,6 @@ Rails.application.routes.draw do
 
   root 'home#index'
 
-  get 'home/index' , to: 'home#index'
-
-
   namespace 'admin' do
     resources :products
     resources :orders
@@ -29,6 +26,10 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :orders, only: :show
+  resources :products, only: [:show, :index]
+
+  get 'home/index' , to: 'home#index'
   get 'cart', to: 'cart#index'
   get 'cart/address', to: 'cart#address'
   get 'cart/billing', to: 'cart#billing'
@@ -44,19 +45,7 @@ Rails.application.routes.draw do
   get 'cart/checkout', to: 'cart#checkout'
   get 'checkout', to: 'checkout#index'
   get 'account', to: 'home#account', as: :account
-
-
-  resources :orders, only: :show
-
-  resources :products, only: [:show, :index]
-
   get 'users/index', to: 'users#index'
-
   get 'users', to: 'users#show'
-
   get 'orders/:order_id', to: 'orders#show'
-
-  # put 'orders/{:id}/cancel'
-
-
 end

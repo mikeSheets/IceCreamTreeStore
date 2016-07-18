@@ -25,13 +25,13 @@
 
 .container{
   background: $primary;
+  min-height: 200px;
 }
 
 body{
   color: $primary-font;
   background: $secondary;
 }
-
 
 .bgImage{
   height: 250px;
@@ -91,5 +91,4 @@ body{
 .cart.pull-right{
   margin: 8px;
   color: $primary-font;
-
 }

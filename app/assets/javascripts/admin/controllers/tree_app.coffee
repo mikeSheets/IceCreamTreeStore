@@ -1,12 +1,3 @@
-#admin
-#admin
-#admin
-#admin
-#admin
-#admin
-#admin
-#admin
-
 app = angular.module('treeApp')
 
 app.controller 'BodyController', ($scope, Order, OrderItem) ->
@@ -81,7 +72,6 @@ app.controller 'CheckoutController', ($scope, Order, Cc, Product, $window, $q, A
     else
       $scope.address = new Address()
 
-
   $scope.place_order = () ->
     if $scope.placing_order
       return
@@ -127,4 +117,3 @@ app.controller 'CheckoutController', ($scope, Order, Cc, Product, $window, $q, A
       $scope.$parent.order.credit_card_id = $scope.cc.id
     promise.catch (errors) ->
       $scope.cc_errors = errors
-

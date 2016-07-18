@@ -1,6 +1,5 @@
 app = angular.module('treeApp')
 
-
 app.factory 'Order', ($resource) ->
   $resource '/api/v1/orders/:id', { id: "@id" },
     'update': {
@@ -45,7 +44,6 @@ app.factory('Address', ['$resource', ($resource) ->
         url: '/api/v1/addresses/:id'
       }
     }
-
 ])
 
 app.factory('State', ['$resource', ($resource, $options) ->
@@ -63,5 +61,4 @@ app.factory('Cc', ['$resource', ($resource) ->
         url: '/api/v1/credit_cards/:id'
       }
     }
-
 ])

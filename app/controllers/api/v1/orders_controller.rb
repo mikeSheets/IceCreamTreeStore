@@ -25,7 +25,6 @@ class Api::V1::OrdersController < ApplicationController
     else
       render json: order.errors.to_json, status: 400
     end
-
   end
 
   protected

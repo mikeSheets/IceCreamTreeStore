@@ -6,11 +6,8 @@ class UsersController < ApplicationController
   def show
   end
 
-  # POST /users
-  # POST /users.json
   def create
     @user = current_user
-
     respond_to do |format|
       if @user.save
         # Tell the UserMailer to send a welcome email after save

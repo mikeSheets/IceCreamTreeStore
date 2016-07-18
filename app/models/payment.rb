@@ -3,7 +3,6 @@ class Payment < ActiveRecord::Base
   belongs_to :order
   validates_presence_of :amount, :order, :credit_card, :state
 
-
   self.state_machine({
      pending: [:completed],
      completed: [:voided],

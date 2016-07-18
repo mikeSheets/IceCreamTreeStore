@@ -2,7 +2,6 @@ module Admin
   class OrdersController < AdminController
     layout "admin/application"
 
-
     def index
       @orders = Order.where(state: "placed")
     end

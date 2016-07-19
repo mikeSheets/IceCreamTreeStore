@@ -13,7 +13,6 @@
           Item Price
         %th.price
           Price
-
       %tr{"ng-repeat" => "item in cart.order_items", "ng-controller" => "ItemController"}
         %td.item
           {{item.source.name}}
@@ -37,21 +36,15 @@
         %td.price.total
         %td.price.total
           {{total() | currency}}
-
-  %br
-  %br
-  %br
   .checkout-link
     -if user_signed_in?
       %button.to_checkout
         = link_to 'Checkout', checkout_path
       %button.empty_cart
         = link_to 'Empty Cart', cart_destroy_path, method: :post
-
     -else
       %button
         = link_to 'Sign-in to Checkout', new_user_session_path
-
   .bottom_links
     =link_to 'Home', root_path
     |

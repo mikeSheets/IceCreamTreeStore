@@ -30,7 +30,13 @@ button.checkout_click {
   text-align: center;
 }
 
-.thing{
-  height: 200px;
-  width: 100%;
+.errors{
+  color: red;
+  text-align: center;
+}
+
+.alert.alert-danger{
+  background-color: $secondary-font;
+  border-color: $primary-font;
+  color: $primary;
 }

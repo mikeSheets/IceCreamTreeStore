@@ -22,6 +22,5 @@
               %select.form-control{"ng-model" => "product.quantity", "ng-change" => "add_product(product)"}
                 %option.qty{"ng-repeat" => "number in prod_arr", "ng-value" => "{{number}}"}
                   {{number}}
-
   .bottom_links
     = link_to 'To Cart', cart_path

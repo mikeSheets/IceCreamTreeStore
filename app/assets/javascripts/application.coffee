@@ -19,4 +19,4 @@
 #= require_tree .
 #= require_directory ./controllers
 
-angular.module('treeApp', ['ngResource', '$window'])
+app = angular.module('treeApp', ['ngResource'])

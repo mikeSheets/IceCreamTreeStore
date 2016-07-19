@@ -1,10 +1,11 @@
 %h1 Checkout
 .container{"ng-controller" => "CheckoutController"}
-  .address_box.col-sm-4{"ng-controller" => "AddressController", "ng-init" => "address_init(#{current_user.address.to_json})"}
+  .address_box.col-sm-4{"ng-init" => "address_init(#{current_user.address.to_json})"}
     %h3.checkout_label
       Address
-    %div{'ng-if' => 'errors'}
-      {{ errors }}
+    .errors{'ng-if' => 'address_errors', "ng-repeat" => "(key, value) in address_errors"}
+      .alert.alert-danger
+        {{ key }}: {{ value }}
     %table
       %tbody.address_block
         %tr
@@ -45,11 +46,12 @@
             %input.address_input{"ng-model" => "address.zip"}
     %button.checkout_click{"ng-click" => "updateAddress()"}
       Update address
-  .billing_box.col-sm-4{"ng-controller" => "CreditCardController", "ng-init" => "cc_init(#{current_user.credit_card.to_json})"}
+  .billing_box.col-sm-4{"ng-init" => "cc_init(#{current_user.credit_card.to_json})"}
     %h3.checkout_label
       Billing
-    %div{'ng-if' => 'errors'}
-      {{ errors }}
+    .errors{'ng-if' => 'cc_errors', "ng-repeat" => "(key, value) in cc_errors"}
+      .alert.alert-danger
+        {{ key }}: {{ value }}
     %table
       %tbody.cc_block
         %tr
@@ -87,6 +89,9 @@
   .cart_box.col-sm-4{"ng-controller" => "CartController"}
     %h3.checkout_label
       Order Items
+    .errors{'ng-if' => 'order_errors', "ng-repeat" => "(key, value) in order_errors"}
+      .alert.alert-danger
+        Sorry{{ value }}
     %table
       %tr.col-headers
         %th.item

@@ -1,12 +1,8 @@
 
 .idea/*
-log/test.log
+log/*
 db/test.sqlite3
 tmp/*
 .idea/
 tmp/
-app/assets/javascripts/checkout.coffee
-app/assets/javascripts/resources/
-app/assets/stylesheets/checkout.scss
-app/helpers/checkout_helper.rb
 test/controllers/checkout_controller_test.rb

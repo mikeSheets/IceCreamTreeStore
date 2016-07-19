@@ -11,15 +11,11 @@ class Api::V1::OrderItemsController < ApplicationController
         flash[:alert] = oi.errors.map{|name, err| "#{name}: #{err}"}.join(", ")
       end
     end
-
     render json: oi.to_json
-
   end
 
   protected
-
   def order_item_params
     params.require(:order_item).permit(:id, :source_id, :source_type, :order_id, :quantity)
   end
-
 end

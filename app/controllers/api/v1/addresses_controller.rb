@@ -1,14 +1,14 @@
 class Api::V1::AddressesController < ApplicationController
+  load_and_authorize_resource :address
 
   def create
-    authorize! :address, :checkout
-
-    address = current_user.address || Address.new(name: current_user.name)
+    address = Address.new(address_params)
+    address.user_id = current_user.id
 
     if address.save
       render json: address.to_json
     else
-      # TODO
+      render json: address.errors.to_json, status: 400
     end
   end
 
@@ -17,15 +17,12 @@ class Api::V1::AddressesController < ApplicationController
     if address.update(address_params)
       render json: address.to_json
     else
-      # TODO
+      render json: address.errors.to_json, status: 400
     end
-
   end
 
   protected
-
   def address_params
     params.require(:address).permit(:name, :line1, :line2, :city, :state_id, :zip, :user)
   end
-
 end

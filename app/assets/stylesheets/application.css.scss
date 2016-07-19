@@ -92,3 +92,26 @@ body{
   margin: 8px;
   color: $primary-font;
 }
+
+.place_for_front_page_content, .side_menu_thing{
+  height: 500px;
+  border: dashed;
+  border-color: $primary-font;
+  margin: 20px;
+}
+
+.products-link{
+  height: 40px;
+  width: 50px;
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+  line-height: 40px;
+}
+
+.footer_menu{
+  height: 200px;
+  border: dashed;
+  border-color: $primary-font;
+  padding: 20px;
+}

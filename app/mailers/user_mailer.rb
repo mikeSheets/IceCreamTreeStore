@@ -9,8 +9,8 @@ class UserMailer < ApplicationMailer
 
   def order_email(order_id)
     @order = Order.find_by(id: order_id)
-    @user = User.find_by(id: @order.user_id)
-    @credit = CreditCard.find_by(id: @user.id)
+    @user = @order.user
+    @credit = @order.payment.credit_card
     @url = 'http://localhost:3000'
     mail(to: @user.email, subject: 'Thank you for your Ice cream tree order')
   end

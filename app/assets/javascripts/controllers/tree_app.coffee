@@ -113,7 +113,7 @@ app.controller 'CheckoutController', ($scope, $window, $q, Order, Cc, Product, A
       delete $scope.cc_errors
     else
       promise = $scope.cc.$save()
-      delete $scope.cc_errors
+      delete $scope.errors
 
     promise.then ()->
       $scope.order.credit_card_id = $scope.cc.id

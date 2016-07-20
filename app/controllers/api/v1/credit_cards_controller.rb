@@ -1,5 +1,5 @@
 class Api::V1::CreditCardsController < ApplicationController
-  load_and_authorize_resource :credit_card
+  load_and_authorize_resource CreditCard
 
   def create
     cc = CreditCard.new(cc_params)

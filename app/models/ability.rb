@@ -9,12 +9,14 @@ class Ability
       if user.role == User::ADMIN
         can :crud, Product
         can  :access, :admin
+        can :crud, Order
+        can :crud, Address
+
+      else
+        can [:read, :update, :get_cart], Order, user_id: user.id
+        can [:create, :read, :update], Address, user_id: user.id
+        can [:create, :read, :update], CreditCard, user_id: user.id
       end
-
-      can [:read, :update, :get_cart], Order, user_id: user.id
-      can [:create, :read, :update], Address, user_id: user.id
-      can [:create, :read, :update], CreditCard, user_id: user.id
-
     end
   end
 end

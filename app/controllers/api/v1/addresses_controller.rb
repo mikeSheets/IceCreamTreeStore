@@ -1,5 +1,5 @@
 class Api::V1::AddressesController < ApplicationController
-  load_and_authorize_resource :address
+  load_and_authorize_resource Address
 
   def create
     address = Address.new(address_params)

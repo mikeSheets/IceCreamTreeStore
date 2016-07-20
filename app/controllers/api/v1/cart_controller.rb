@@ -1,5 +1,4 @@
 class Api::V1::CartController < ApplicationController
-  load_and_authorize_resource :cart
 
   def add_product
     product = OrderItem.find_or_initialize_by(:source_id, :order_id)

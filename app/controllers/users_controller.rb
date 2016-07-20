@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  after_create :do_mailer
 
   def index
   end
@@ -6,7 +7,7 @@ class UsersController < ApplicationController
   def show
   end
 
-  def create
+  def do_mailer
     @user = current_user
     respond_to do |format|
       if @user.save

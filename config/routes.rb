@@ -29,7 +29,6 @@ Rails.application.routes.draw do
   resources :orders, only: :show
   resources :products, only: [:show, :index]
 
-  get 'home/index' , to: 'home#index'
   get 'cart', to: 'cart#index'
   get 'cart/address', to: 'cart#address'
   get 'cart/billing', to: 'cart#billing'

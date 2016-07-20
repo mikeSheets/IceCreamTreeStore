@@ -5,14 +5,13 @@ app.controller 'BodyController', ($scope, Order, OrderItem) ->
 
   #  This add_product uses item.id for the product page.
   $scope.add_product = (item) ->
-    if item.quantity == 0
-      $scope.remove = (item) ->
-        oi = new OrderItem(source_id: item.id, source_type: "Product", quantity: item.quantity, order_id: $scope.cart.id)
-        oi.$save()
-        oi.$delete()
-
     oi = new OrderItem(source_id: item.id, source_type: "Product", quantity: item.quantity, order_id: $scope.cart.id)
-    oi.$save()
+
+    if item.quantity == 0
+      oi.$delete()
+    else
+      oi.$save()
+
     count = 0
     angular.forEach $scope.cart.order_items, (item) ->
       count += parseInt(item.quantity)
@@ -103,7 +102,7 @@ app.controller 'CheckoutController', ($scope, Order, Cc, Product, $window, $q, A
 
     promise.then () ->
       $scope.$parent.order.address_id = $scope.address.id
-      delete $scope.errors
+      delete $scope.address_errors
     .catch (errors) ->
       $scope.address_errors = errors.data
 

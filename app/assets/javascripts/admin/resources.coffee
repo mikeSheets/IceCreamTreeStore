@@ -1,6 +1,6 @@
 app = angular.module('treeApp')
 
-app.factory('Order', ['$scope', ($resource) ->
+app.factory('Order', ['$resource', ($resource) ->
   $resource '/api/v1/orders/:id', { id: "@id" },
     'update': {
       method: 'PUT'

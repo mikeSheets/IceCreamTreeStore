@@ -35,4 +35,6 @@ Rails.application.routes.draw do
   get 'checkout', to: 'checkout#index'
   get 'account', to: 'home#account', as: :account
   get 'orders/:order_id', to: 'orders#show'
+  get 'users/index', to: 'users#index'
+  get 'users', to: 'users#show'
 end

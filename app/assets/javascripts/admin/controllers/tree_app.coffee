@@ -1,9 +1,8 @@
 app = angular.module('treeApp')
 
-app.controller 'BodyController', ($scope, Order, OrderItem) ->
+app.controller 'BodyController', ['$scope', 'Order', 'OrderItem', ($scope, Order, OrderItem) ->
   $scope.cart = Order.cart()
 
-  #  This add_product uses item.id for the product page.
   $scope.add_product = (item) ->
     oi = new OrderItem(source_id: item.id, source_type: "Product", quantity: item.quantity, order_id: $scope.cart.id)
 
@@ -17,20 +16,24 @@ app.controller 'BodyController', ($scope, Order, OrderItem) ->
     angular.forEach $scope.cart.order_items, (item) ->
       count += parseInt(item.quantity)
     $scope.cart.product_count = count
+]
 
-app.controller 'ProductsController', ($scope, Product) ->
+app.controller 'ProductsController', ['$scope', 'Product', ($scope, Product) ->
   $scope.init = (products) ->
     $scope.products = products.map (product) ->
       new Product(product)
+]
 
-app.controller 'ProductController', ($scope) ->
+app.controller 'ProductController', ['$scope', ($scope) ->
   $scope.prod_arr = [0..($scope.product.on_hand)]
+]
 
-app.controller 'ItemController', ($scope) ->
+app.controller 'ItemController', ['$scope', ($scope) ->
   $scope.price = ($scope.item.quantity*$scope.item.source.price)
   $scope.arr = [0..($scope.item.source.on_hand)]
+]
 
-app.controller 'CartController', ($scope, Product, OrderItem) ->
+app.controller 'CartController', ['$scope', 'Product', 'OrderItem', ($scope, Product, OrderItem) ->
   $scope.init = (products) ->
     $scope.products = products.map (product) ->
       new Product(product)
@@ -41,7 +44,6 @@ app.controller 'CartController', ($scope, Product, OrderItem) ->
       tot += (item.quantity*item.source.price))
     tot
 
-  #   This add_product is used for the cart page and uses item.source.id
   $scope.add_product = (item) ->
     oi = new OrderItem(source_id: item.source.id, source_type: "Product", quantity: item.quantity, order_id: $scope.cart.id)
     if item.quantity == 0
@@ -54,8 +56,9 @@ app.controller 'CartController', ($scope, Product, OrderItem) ->
     angular.forEach $scope.cart.order_items, (item) ->
       count += parseInt(item.quantity)
     $scope.cart.product_count = count
+]
 
-app.controller 'CheckoutController', ($scope, Order, Cc, Product, $window, $q, Address, State) ->
+app.controller 'CheckoutController', ['$scope', '$window', '$q', 'Order', 'Cc', 'Product', 'Address', 'State', ($scope, $window, $q, Order, Cc, Product, Address, State) ->
   Order.cart().$promise.then (order) ->
     $scope.order = order
 
@@ -93,27 +96,39 @@ app.controller 'CheckoutController', ($scope, Order, Cc, Product, $window, $q, A
         $window.location.href = "/orders/#{order.id}"
       .catch (errors) ->
         $scope.placing_order = false
-        console.log errors
+        $scope.order_errors = $scope.strip(errors.data)
 
   $scope.updateAddress = () ->
     if $scope.address.id?
       promise = $scope.address.$update()
+      delete $scope.address_errors
     else
       promise = $scope.address.$save()
+      delete $scope.address_errors
 
     promise.then () ->
-      $scope.$parent.order.address_id = $scope.address.id
+      $scope.order.address_id = $scope.address.id
       delete $scope.address_errors
-    .catch (errors) ->
-      $scope.address_errors = errors.data
+    promise.catch (errors) ->
+      $scope.address_errors = $scope.strip(errors.data)
 
   $scope.updateBilling = () ->
     if $scope.cc.id?
       promise = $scope.cc.$update()
+      delete $scope.cc_errors
     else
       promise = $scope.cc.$save()
+      delete $scope.errors
 
     promise.then ()->
-      $scope.$parent.order.credit_card_id = $scope.cc.id
+      $scope.order.credit_card_id = $scope.cc.id
+      delete $scope.cc_errors
     promise.catch (errors) ->
-      $scope.cc_errors = errors
+      $scope.cc_errors = $scope.strip(errors.data)
+
+  $scope.strip = (clothes) ->
+    clean_errors = {}
+    angular.forEach clothes, (errors, key) ->
+      clean_errors[key.charAt(0).toUpperCase() + key.substr(1).toLowerCase()] = errors.join(", ")
+    clean_errors
+]

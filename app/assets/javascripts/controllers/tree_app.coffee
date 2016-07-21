@@ -1,6 +1,6 @@
 app = angular.module('treeApp')
 
-app.controller 'BodyController', ($scope, Order, OrderItem) ->
+app.controller 'BodyController', ['$scope', 'Order', 'OrderItem', ($scope, Order, OrderItem) ->
   $scope.cart = Order.cart()
 
   $scope.add_product = (item) ->
@@ -16,20 +16,24 @@ app.controller 'BodyController', ($scope, Order, OrderItem) ->
     angular.forEach $scope.cart.order_items, (item) ->
       count += parseInt(item.quantity)
     $scope.cart.product_count = count
+]
 
-app.controller 'ProductsController', ($scope, Product) ->
+app.controller 'ProductsController', ['$scope', 'Product', ($scope, Product) ->
   $scope.init = (products) ->
     $scope.products = products.map (product) ->
       new Product(product)
+]
 
-app.controller 'ProductController', ($scope) ->
+app.controller 'ProductController', ['$scope', ($scope) ->
   $scope.prod_arr = [0..($scope.product.on_hand)]
+]
 
-app.controller 'ItemController', ($scope) ->
+app.controller 'ItemController', ['$scope', ($scope) ->
   $scope.price = ($scope.item.quantity*$scope.item.source.price)
   $scope.arr = [0..($scope.item.source.on_hand)]
+]
 
-app.controller 'CartController', ($scope, Product, OrderItem) ->
+app.controller 'CartController', ['$scope', 'Product', 'OrderItem', ($scope, Product, OrderItem) ->
   $scope.init = (products) ->
     $scope.products = products.map (product) ->
       new Product(product)
@@ -52,8 +56,9 @@ app.controller 'CartController', ($scope, Product, OrderItem) ->
     angular.forEach $scope.cart.order_items, (item) ->
       count += parseInt(item.quantity)
     $scope.cart.product_count = count
+]
 
-app.controller 'CheckoutController', ($scope, $window, $q, Order, Cc, Product, Address, State) ->
+app.controller 'CheckoutController', ['$scope', '$window', '$q', 'Order', 'Cc', 'Product', 'Address', 'State', ($scope, $window, $q, Order, Cc, Product, Address, State) ->
   Order.cart().$promise.then (order) ->
     $scope.order = order
 
@@ -126,3 +131,4 @@ app.controller 'CheckoutController', ($scope, $window, $q, Order, Cc, Product, A
     angular.forEach clothes, (errors, key) ->
       clean_errors[key.charAt(0).toUpperCase() + key.substr(1).toLowerCase()] = errors.join(", ")
     clean_errors
+]

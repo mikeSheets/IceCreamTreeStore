@@ -1,17 +1,19 @@
 class Api::V1::OrderItemsController < ApplicationController
+  load_and_authorize_resource
 
   def create
-    oi = OrderItem.find_or_initialize_by(source_id: params[:source_id], order_id: cart.id, source_type: params[:source_type])
-    oi.quantity = params[:quantity]
+    @order_item = OrderItem.find_or_initialize_by(source_id: params[:source_id], order_id: cart.id, source_type: params[:source_type])
+    @order_item.quantity = params[:quantity]
 
-    if oi.quantity == 0
-      oi.delete
+    if @order_item.quantity == 0
+      @order_item.save
+      @order_item.delete
     else
-      unless oi.save
-        flash[:alert] = oi.errors.map{|name, err| "#{name}: #{err}"}.join(", ")
+      unless @order_item.save
+        flash[:alert] = @order_item.errors.map{|name, err| "#{name}: #{err}"}.join(", ")
       end
     end
-    render json: oi.to_json
+    render json: @order_item.to_json
   end
 
   protected

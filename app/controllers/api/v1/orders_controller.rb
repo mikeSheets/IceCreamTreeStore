@@ -1,5 +1,5 @@
 class Api::V1::OrdersController < ApplicationController
-  load_and_authorize_resource :order
+  load_and_authorize_resource
   wrap_parameters include: Order.column_names + [:credit_card_id]
 
   rescue_from CanCan::AccessDenied do |exception|

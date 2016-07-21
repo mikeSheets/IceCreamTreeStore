@@ -11,4 +11,13 @@ class User < ActiveRecord::Base
   has_one :address
   has_one :credit_card
   validates_presence_of :name, :role
+
+  after_create :do_mailer
+
+
+  def do_mailer
+
+    # Tell the UserMailer to send a welcome email after save
+    UserMailer.welcome_email(self).deliver_later
+  end
 end

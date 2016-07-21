@@ -1,5 +1,6 @@
 class UserMailer < ApplicationMailer
   default from: 'notifications@icecreamtrees.com'
+  include SendGrid
 
   def welcome_email(user)
     @user = user

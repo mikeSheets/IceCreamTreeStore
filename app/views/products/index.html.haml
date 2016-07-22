@@ -9,7 +9,7 @@
             {{product.name}}
         .panel-body
           .image_box
-            = image_tag "", 'ng-src' => "{{product.formatted_image}}"
+            = image_tag "products/#{@product.image.split('/').last}"
           .admin_link {{product.price | currency}}
           .admin_link
             %a{'ng-href'=> "#{products_path}/{{ product.permalink }}"} {{ product.name }}

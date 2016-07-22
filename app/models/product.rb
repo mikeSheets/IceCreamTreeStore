@@ -5,7 +5,8 @@ class Product < ActiveRecord::Base
   before_validation :set_permalink
 
   def formatted_image
-    "assets/products/" + "#{image.split("/").last}"
+    @image = "products/" + image.split("/").last
+    ActionController::Base.helpers.image_url(@image.to_str)
   end
 
   def formatted_link

@@ -124,5 +124,6 @@
         %td.price.total
           #{number_to_currency @order.order_items.to_a.sum{|x| x.source.price*x.quantity}}
     %p
-      To login to the site, just follow this link: #{@url}.
+      To login to the site, just follow this link:
+      = link_to "Ice Cream Tree Shoppe", root_url
     %p Thanks for ordering and have a great day!

@@ -55,7 +55,7 @@ class Order < ActiveRecord::Base
   end
 
   after_transition_to :placed do
-    UserMailer.order_email(self.id).deliver_later
+    UserMailer.order_email(self.id).deliver_later if !Rails.env.test?
   end
 
   def serializable_hash(options={})

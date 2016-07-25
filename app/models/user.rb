@@ -18,6 +18,6 @@ class User < ActiveRecord::Base
   def do_mailer
 
     # Tell the UserMailer to send a welcome email after save
-    UserMailer.welcome_email(self).deliver_later
+    UserMailer.welcome_email(self).deliver_later if !Rails.env.test?
   end
 end

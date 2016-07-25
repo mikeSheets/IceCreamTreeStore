@@ -1,7 +1,7 @@
 %p#notice= notice
 .container
   %h1 Khajiit has trees if you have coin.
-  .product_box{"ng-controller" => "ProductsController", "ng-init" => "init(#{@products.to_json})"}
+  .product_box.row{"ng-controller" => "ProductsController", "ng-init" => "init(#{@products.to_json})"}
     .col-sm-6.product{"ng-repeat" => "product in products"}
       .panel.panel-default{"ng-controller" => "ProductController"}
         .panel-heading
@@ -16,7 +16,7 @@
           .admin_link
             .qty-stuff
               Quantity:
-            .out_of_stock{"ng-if" => "product.on_hand == 0"}
+            %span.out_of_stock{"ng-if" => "product.on_hand == 0"}
               Out of stock
             .form-group{"ng-if" => "product.on_hand != 0"}
               %select.form-control{"ng-model" => "product.quantity", "ng-change" => "add_product(product)"}

@@ -14,9 +14,6 @@ Rails.application.routes.draw do
         get 'cart', on: :collection, to: 'orders#get_cart'
         put 'update', on: :member
       end
-      resources :products do
-        post 'add_product', on: :member
-      end
       resources :order_items do
         post 'create', on: :member
       end

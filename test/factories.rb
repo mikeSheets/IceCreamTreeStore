@@ -73,7 +73,6 @@ FactoryGirl.define do
 
   factory :credit_card do
     number "4111111111111111"
-    #last_four
     cvc 123
     month 10
     year 2020

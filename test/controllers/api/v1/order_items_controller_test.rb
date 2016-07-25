@@ -1,6 +1,5 @@
 require 'test_helper'
 
-
 class Api::V1::OrderItemsControllerTest < ActionController::TestCase
 
   setup do

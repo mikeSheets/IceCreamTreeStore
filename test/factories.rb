@@ -25,7 +25,6 @@ FactoryGirl.define do
 
   factory :order do
     user { create(:user) }
-
     address { user.address || create(:address) }
   end
 
@@ -42,7 +41,8 @@ FactoryGirl.define do
   end
 
   factory :address do
-    name 'name'
+    user { create(:user) }
+    name '#{@user.name}'
     sequence :line1 do |n|
       "line 1-#{n}"
     end
@@ -54,7 +54,6 @@ FactoryGirl.define do
     end
     state { State.first || create(:state) }
     zip 00000
-    user { create(:user) }
   end
 
 	factory :state do

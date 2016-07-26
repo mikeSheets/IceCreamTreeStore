@@ -2,7 +2,7 @@ class Product < ActiveRecord::Base
   validates_presence_of :name, :permalink
   has_many :order_items, as: :source
 
-  before_validation :set_permalink
+  before_create :set_permalink
 
   def formatted_image
     @image = "products/" + image.split("/").last
@@ -21,6 +21,6 @@ class Product < ActiveRecord::Base
   end
 
   def set_permalink
-    self.permalink = name.parameterize
+    self.permalink = self.name.parameterize
   end
 end

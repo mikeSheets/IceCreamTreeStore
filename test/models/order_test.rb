@@ -6,18 +6,6 @@ class OrderTest < ActiveSupport::TestCase
     assert order.persisted?
   end
 
-  test "placing an order" do
-    order = create(:order)
-    oi = create(:order_item, order: order)
-
-    product = oi.source
-
-    assert_difference("product.on_hand", -oi.quantity) do
-      assert order.make_placed, order.errors
-      product.reload
-    end
-
-  end
   # test "can't transition from cart to canceled" do
   #   puts Order.column_names
   #   order = build(:order)

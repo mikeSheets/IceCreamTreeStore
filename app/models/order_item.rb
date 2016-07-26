@@ -8,8 +8,6 @@ class OrderItem < ActiveRecord::Base
   end
 
   def serializable_hash(options={})
-    puts self.inspect
-    puts "#{self.persisted?} source_id = #{source_id}, source_type = #{source_type}"
     {
       source: source.serializable_hash
     }.merge(super(options))

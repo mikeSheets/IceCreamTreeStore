@@ -12,7 +12,6 @@ class ProductsControllerTest < ActionController::TestCase
   end
 
   test "should get product show" do
-    puts @product.image
     get :show, { id: @product.id }
     assert_response :success
   end

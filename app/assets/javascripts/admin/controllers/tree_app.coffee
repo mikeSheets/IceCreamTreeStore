@@ -5,12 +5,7 @@ app.controller 'BodyController', ['$scope', 'Order', 'OrderItem', ($scope, Order
 
   $scope.add_product = (item) ->
     oi = new OrderItem(source_id: item.id, source_type: "Product", quantity: item.quantity, order_id: $scope.cart.id)
-
-    if item.quantity == 0
-      oi.$save()
-      oi.$delete()
-    else
-      oi.$save()
+    oi.$save()
 
     count = 0
     angular.forEach $scope.cart.order_items, (item) ->
@@ -46,11 +41,7 @@ app.controller 'CartController', ['$scope', 'Product', 'OrderItem', ($scope, Pro
 
   $scope.add_product = (item) ->
     oi = new OrderItem(source_id: item.source.id, source_type: "Product", quantity: item.quantity, order_id: $scope.cart.id)
-    if item.quantity == 0
-      oi.$save()
-      oi.$delete()
-    else
-      oi.$save()
+    oi.$save()
 
     count = 0
     angular.forEach $scope.cart.order_items, (item) ->

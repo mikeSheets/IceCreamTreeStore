@@ -17,12 +17,6 @@ app.factory('Product', ['$resource', ($resource) ->
   $resource '/api/v1/products/:id',
     {
       id:'@id'
-    },
-    {
-      'add_product': {
-        method:'POST',
-        url: '/api/v1/products/:id/add_product'
-      }
     }
 ])
 

@@ -13,7 +13,7 @@ FactoryGirl.define do
        "description-#{n}"
      end
      sequence :image do |n|
-       "default.jpg"
+       "app/assets/images/products/default.jpg"
      end
   end
 
@@ -26,6 +26,7 @@ FactoryGirl.define do
   factory :order do
     user { create(:user) }
     address { user.address || create(:address) }
+    state 'cart'
   end
 
   factory :user do

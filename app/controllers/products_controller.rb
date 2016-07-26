@@ -7,6 +7,7 @@ class ProductsController < ApplicationController
   end
 
   def show
+    @product ||= Product.find_by_id(params[:id])
   end
 
   private

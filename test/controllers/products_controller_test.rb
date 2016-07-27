@@ -15,5 +15,4 @@ class ProductsControllerTest < ActionController::TestCase
     get :show, { id: @product.id }
     assert_response :success
   end
-
 end

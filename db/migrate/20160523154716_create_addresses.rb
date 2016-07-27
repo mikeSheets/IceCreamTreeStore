@@ -8,7 +8,6 @@ class CreateAddresses < ActiveRecord::Migration
       t.references :state
       t.integer :zip
       t.references :user
-
       t.timestamps null: false
     end
   end

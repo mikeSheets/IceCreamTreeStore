@@ -1,7 +1,6 @@
 module CartHelper
 
   def cart
-    puts "1"
     id = session[:cart_id]
     if id
       order = Order.where(id: id, state: Order::CART).take
@@ -17,7 +16,6 @@ module CartHelper
   end
 
   def create_cart
-    puts "2"
     order = Order.create(user_id: current_user.try(:id))
     session[:cart_id] = order.id if order
     order

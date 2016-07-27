@@ -25,13 +25,13 @@
 
 .container{
   background: $primary;
+  min-height: 200px;
 }
 
 body{
   color: $primary-font;
   background: $secondary;
 }
-
 
 .bgImage{
   height: 250px;
@@ -61,20 +61,29 @@ body{
 }
 
 .top-buttons {
-  margin: 0 10px;
-  float: right;
+  margin: 0;
   position: absolute;
-  right: 0;
+  right: 0px;
   top: 0;
   color: $primary-font;
   .btn-group {
-    width: 25%;
     background-color: $primary;
     .btn.btn-default.dropdown-toggle {
       width: 125px;
+      min-width: 125px;
+      max-width: 125px;
     }
     .dropdown-menu{
-      width: 125px;
+      width: auto!important;
+      max-width: 125px;
+      min-width: 125px;
+      li {
+        margin: 0;
+        padding: 0;
+        a{
+          padding: 0 10px;
+        }
+      }
     }
   }
 }
@@ -82,5 +91,27 @@ body{
 .cart.pull-right{
   margin: 8px;
   color: $primary-font;
+}
 
+.place_for_front_page_content, .side_menu_thing{
+  height: 500px;
+  border: dashed;
+  border-color: $primary-font;
+  margin: 2%;
+}
+
+.products-link{
+  height: 40px;
+  width: 50px;
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+  line-height: 40px;
+}
+
+.footer_menu{
+  height: 200px;
+  border: dashed;
+  border-color: $primary-font;
+  padding: 20px;
 }

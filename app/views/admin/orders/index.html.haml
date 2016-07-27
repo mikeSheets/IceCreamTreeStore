@@ -1,2 +1,33 @@
-%h1 ADMIN Orders#index
-%p Find me in app/views/admin/orders/index.html.haml
+%h1 Placed Orders
+.container
+  %br
+  %table.order_table
+    %tbody
+      %tr.headers
+        %th.order_num
+          Order number
+        %th.cust_name
+          Customer Name
+        %th.quant
+          Item Quantity
+        %th.order_total
+          Order Total
+        %th.view
+          Order Details
+      - @orders.each do |order|
+        %tr.order
+          %td.order_num
+            = order.id
+          %td.name
+            = order.address.name
+          %td.qty
+            = order.order_items.to_a.sum(&:quantity)
+          %td.total
+            = number_to_currency order.payment.amount
+          %td.view
+            = link_to 'View Order', admin_order_path(order.id)
+
+  %br
+  %br
+  .bottom_links
+    = link_to 'Admin Product Page', admin_products_path

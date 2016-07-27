@@ -21,28 +21,28 @@
               = @order.address.line1
         %tr
           %td
-            .check_address
+            %label.check_address
               Line 2
           %td
             .address_input
               = @order.address.line2
         %tr
           %td
-            .check_address
+            %label.check_address
               City
           %td
             .address_input
               = @order.address.city
         %tr
           %td
-            .check_address
+            %label.check_address
               State
           %td
             .address_input
               = @order.address.state.name
         %tr
           %td
-            .check_address
+            %label.check_address
               Zipcode
           %td
             .address_input
@@ -58,31 +58,35 @@
               Name on card
           %td
             .address_input
-              = @payment.credit_card.name
+              = @credit.name
         %tr
           %td
             %label.check_cc
               Credit Card Number
           %td
             .address_input
+              = "XXXXXXXXXXXX#{@credit.last_four}"
         %tr
           %td
             %label.check_cc
               Expiration month
           %td
             .address_input
+              = @credit.month
         %tr
           %td
             %label.check_cc
               Expiration year
           %td
             .address_input
+              =@credit.year
         %tr
           %td
             %label.check_cc
               CVC
           %td
             .address_input
+              XXX
   .cart_box.col-sm-4
     %h3.checkout_label
       Order Items
@@ -94,17 +98,20 @@
           Quantity
         %th.price
           Price
-      %tr
-        %td.item
-          {{item.source.name}}
-        %td.quantity
-          .form-group
-        %td.price
-          {{(item.source.price)*(item.quantity) | currency}}
+      - @order.order_items.each do |item|
+        %tr
+          %td.item
+            = item.source.name
+          %td.quantity
+            = item.quantity
+          %td.price
+            = number_to_currency (item.source.price*item.quantity)
       %tr
         %td.item.total
           Total:
         %td.quantity.total
-          {{cart.product_count}}
+          = @order.order_items.to_a.sum(&:quantity)
         %td.price.total
-          {{total() | currency}}
+          = number_to_currency @order.order_items.to_a.sum{|x| x.source.price*x.quantity}
+  .bottom_links
+    = link_to 'Product Page', products_path

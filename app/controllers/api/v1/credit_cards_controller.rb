@@ -1,31 +1,26 @@
 class Api::V1::CreditCardsController < ApplicationController
+  load_and_authorize_resource
 
   def create
-    authorize! :billing, :checkout
+    @credit_card.user_id = current_user.id
 
-    cc = current_user.credit_card || CreditCard.new(name: current_user.name)
-
-    if cc.save
-      render json: cc.to_json
+    if @credit_card.save
+      render json: @credit_card.to_json
     else
-      # TODO
+      render json: @credit_card.errors.to_json, status: 400
     end
   end
 
   def update
-    cc = CreditCard.find(params[:id])
-    if cc.update(cc_params)
-      render json: cc.to_json
+    if @credit_card.update(credit_card_params)
+      render json: @credit_card.to_json
     else
-      # TODO
+      render json: @credit_card.errors.to_json, status: 400
     end
-
   end
 
   protected
-
-  def cc_params
-    params.require(:credit_card).permit(:last_four, :month, :year, :user, :name, :number, :cvc)
+  def credit_card_params
+    params.require(:credit_card).permit(:last_four, :month, :year, :user_id, :name, :number, :cvc)
   end
-
 end

@@ -7,6 +7,6 @@ class AddressTest < ActiveSupport::TestCase
 	end
 
 	test "validations" do
-		assert_validations(Address.new, [:line1, :line2, :city, :state, :zip, :user])
+		assert_validations(Address.new, [:line1, :city, :state, :zip, :user])
 	end
 end

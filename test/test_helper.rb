@@ -3,6 +3,7 @@ require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 
 
+
 class ActiveSupport::TestCase
   require 'factories'
   include FactoryGirl::Syntax::Methods
@@ -18,5 +19,14 @@ class ActiveSupport::TestCase
 
     end
     # assert_equal fields.count, model.errors.count, model.errors.inspect
+  end
+end
+class ActionController::TestCase
+  include Devise::TestHelpers
+
+  def teardown
+    # make sure nobody is left signed in
+    sign_out :user
+    super
   end
 end

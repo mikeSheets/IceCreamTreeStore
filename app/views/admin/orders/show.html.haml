@@ -1,2 +1,121 @@
-%h1 ADMIN Orders#show
-%p Find me in app/views/admin/orders/show.html.haml
+%h1 Order completed
+.container
+  .address_box.col-sm-4
+    %h3.checkout_label
+      Address
+    %table
+      %tbody.address_block
+        %tr
+          %td
+            %label.check_address
+              Name
+          %td
+            .address_input
+              = @order.address.name
+        %tr
+          %td
+            %label.check_address
+              Line 1
+          %td
+            .address_input
+              = @order.address.line1
+        %tr
+          %td
+            %label.check_address
+              Line 2
+          %td
+            .address_input
+              = @order.address.line2
+        %tr
+          %td
+            %label.check_address
+              City
+          %td
+            .address_input
+              = @order.address.city
+        %tr
+          %td
+            %label.check_address
+              State
+          %td
+            .address_input
+              = @order.address.state.name
+        %tr
+          %td
+            %label.check_address
+              Zipcode
+          %td
+            .address_input
+              = @order.address.zip
+  .billing_box.col-sm-4
+    %h3.checkout_label
+      Billing
+    %table
+      %tbody.cc_block
+        %tr
+          %td
+            %label.check_cc
+              Name on card
+          %td
+            .address_input
+              = @credit.name
+        %tr
+          %td
+            %label.check_cc
+              Credit Card Number
+          %td
+            .address_input
+              = "XXXXXXXXXXXX#{@credit.last_four}"
+        %tr
+          %td
+            %label.check_cc
+              Expiration month
+          %td
+            .address_input
+              = @credit.month
+        %tr
+          %td
+            %label.check_cc
+              Expiration year
+          %td
+            .address_input
+              =@credit.year
+        %tr
+          %td
+            %label.check_cc
+              CVC
+          %td
+            .address_input
+              XXX
+  .cart_box.col-sm-4
+    %h3.checkout_label
+      Order Items
+    %table
+      %tr.col-headers
+        %th.item
+          Item
+        %th.quantity
+          Quantity
+        %th.price
+          Price
+      - @order.order_items.each do |item|
+        %tr
+          %td.item
+            = item.source.name
+          %td.quantity
+            = item.quantity
+          %td.price
+            = number_to_currency (item.source.price*item.quantity)
+      %tr
+        %td.item.total
+          Total:
+        %td.quantity.total
+          = @order.order_items.to_a.sum(&:quantity)
+        %td.price.total
+          = number_to_currency @order.order_items.to_a.sum{|x| x.source.price*x.quantity}
+
+
+  .bottom_links
+    = link_to 'Admin Product Page', admin_products_path
+    |
+    = link_to 'Admin Orders', admin_orders_path

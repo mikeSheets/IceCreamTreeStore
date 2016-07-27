@@ -24,6 +24,11 @@
   margin: 0 auto;
 }
 
+.container{
+  background: $primary;
+  min-height: 200px;
+}
+
 .bgImage{
   height: 200px;
   max-width: 100%;
@@ -49,13 +54,20 @@
   top: 0;
   color: $primary-font;
   .btn-group {
-    width: 25%;
     background-color: $primary;
     .btn.btn-default.dropdown-toggle {
       width: 125px;
+      min-width: 125px;
+      max-width: 125px;
     }
     .dropdown-menu{
-      width: 125px;
+      width: auto!important;
+      max-width: 125px;
+      min-width: 125px;
+      li {
+        margin: 0;
+        padding: 0;
+      }
     }
   }
 }
@@ -63,5 +75,4 @@
 .cart.pull-right{
   margin: 8px;
   color: $primary-font;
-
 }

@@ -40,11 +40,11 @@
     -if user_signed_in?
       %button.to_checkout
         = link_to 'Checkout', checkout_path
-      %button.empty_cart
-        = link_to 'Empty Cart', cart_destroy_path, method: :post
     -else
       %button
         = link_to 'Sign-in to Checkout', new_user_session_path
+    %button.empty_cart
+      = link_to 'Empty Cart', cart_destroy_path, method: :post
   .bottom_links
     =link_to 'Home', root_path
     |

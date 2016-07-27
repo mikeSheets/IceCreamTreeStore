@@ -18,7 +18,7 @@
           %li= link_to 'Sign out', destroy_user_session_path
           -if user_signed_in?
             %li= link_to 'Account details', account_path
-            -if current_user.role == User::ADMIN
+            -if current_user.is_admin?
               %li= link_to 'Admin Products', admin_products_path
               %li= link_to 'Admin Orders', admin_orders_path
       .cart_thing

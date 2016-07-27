@@ -1,5 +1,4 @@
 class Api::V1::CreditCardsController < Api::V1::BaseController
-  load_and_authorize_resource
 
   protected
   def credit_card_params

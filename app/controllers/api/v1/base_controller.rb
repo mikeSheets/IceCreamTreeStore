@@ -1,4 +1,5 @@
 class Api::V1::BaseController < ApplicationController
+  load_and_authorize_resource param_method: :strong_params
 
   def create
     model = resource_klass.new(strong_params)

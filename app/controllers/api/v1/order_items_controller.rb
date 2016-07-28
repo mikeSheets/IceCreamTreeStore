@@ -2,6 +2,10 @@ class Api::V1::OrderItemsController < ApplicationController
   load_and_authorize_resource
 
   def create
+    if !cart
+      create_cart
+    end
+
     @order_item = OrderItem.find_or_initialize_by(source_id: order_item_params[:source_id], order_id: cart.id, source_type: order_item_params[:source_type])
     @order_item.quantity = order_item_params[:quantity]
 

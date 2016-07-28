@@ -15,7 +15,11 @@ class Api::V1::OrdersController < ApplicationController
   end
 
   def get_cart
-    render json: cart.to_json
+    if cart
+      render json: cart.to_json
+    else
+      render json: {}, status: 404
+    end
   end
 
   def update

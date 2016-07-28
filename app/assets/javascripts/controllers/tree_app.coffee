@@ -3,14 +3,35 @@ app = angular.module('treeApp')
 app.controller 'BodyController', ['$scope', 'Order', 'OrderItem', ($scope, Order, OrderItem) ->
   $scope.cart = Order.cart()
 
+  $scope.cart_check = () ->
+    count = 0
+    angular.forEach($scope.cart.order_items, (item) ->
+      count += parseInt(item.quantity))
+    count
+
+  $scope.cart.product_count = $scope.cart_check()
+
   $scope.add_product = (item) ->
     oi = new OrderItem(source_id: item.id, source_type: "Product", quantity: item.quantity, order_id: $scope.cart.id)
     oi.$save()
+    .then (oi2) ->
+      if $scope.cart.id?
+        looper = true
+        angular.forEach($scope.cart.order_items, (item) ->
+          if oi2.source.id == item.source.id
+            item.quantity = oi2.quantity
+            looper = false)
+        if looper == true
+          $scope.cart.order_items.push(oi2)
+      else
+        $scope.cart = Order.cart()
+      $scope.cart.product_count = $scope.cart_check()
+]
 
-    count = 0
-    angular.forEach $scope.cart.order_items, (item) ->
-      count += parseInt(item.quantity)
-    $scope.cart.product_count = count
+app.controller 'ProductsController', ['$scope', 'Product', ($scope, Product) ->
+  $scope.init = (products) ->
+    $scope.products = products.map (product) ->
+      new Product(product)
 ]
 
 app.controller 'ProductsController', ['$scope', 'Product', ($scope, Product) ->
@@ -42,11 +63,15 @@ app.controller 'CartController', ['$scope', 'Product', 'OrderItem', ($scope, Pro
   $scope.add_product = (item) ->
     oi = new OrderItem(source_id: item.source.id, source_type: "Product", quantity: item.quantity, order_id: $scope.cart.id)
     oi.$save()
-
-    count = 0
-    angular.forEach $scope.cart.order_items, (item) ->
-      count += parseInt(item.quantity)
-    $scope.cart.product_count = count
+    .then (oi2) ->
+      looper = true
+      angular.forEach($scope.cart.order_items, (item) ->
+        if oi2.source.id == item.source.id
+          item.quantity = oi2.quantity
+          looper = false)
+      if looper == true
+        $scope.cart.order_items.push(oi2)
+      $scope.cart.product_count = $scope.cart_check()
 ]
 
 app.controller 'CheckoutController', ['$scope', '$window', '$q', 'Order', 'Cc', 'Product', 'Address', 'State', ($scope, $window, $q, Order, Cc, Product, Address, State) ->
